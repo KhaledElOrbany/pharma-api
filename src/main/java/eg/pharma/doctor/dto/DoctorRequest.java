@@ -1,7 +1,6 @@
 package eg.pharma.doctor.dto;
 
 import eg.enums.Specialization;
-import jakarta.persistence.EnumType;
 
 public class DoctorRequest {
     private String firstName;
