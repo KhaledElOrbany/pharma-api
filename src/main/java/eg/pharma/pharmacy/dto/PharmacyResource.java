@@ -1,4 +1,4 @@
 package eg.pharma.pharmacy.dto;
 
-public class PharmacyResource {
+public record PharmacyResource(Long id, String name, String owner, String address, String phone) {
 }
