@@ -1,5 +1,6 @@
 package eg.pharma.doctor;
 
+import eg.enums.Specialization;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +18,7 @@ public class Doctor {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private EnumType specialization;
+    private Specialization specialization;
 
     @Column(nullable = false)
     private String address;
@@ -30,7 +31,7 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(String firstName, String lastName, EnumType specialization, String address, String phone, String clinicPhone) {
+    public Doctor(String firstName, String lastName, Specialization specialization, String address, String phone, String clinicPhone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.specialization = specialization;
@@ -63,11 +64,11 @@ public class Doctor {
         this.lastName = lastName;
     }
 
-    public EnumType getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(EnumType specialization) {
+    public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
 

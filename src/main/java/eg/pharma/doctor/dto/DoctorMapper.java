@@ -17,7 +17,7 @@ public class DoctorMapper {
                 doctor.getId(),
                 doctor.getFirstName(),
                 doctor.getLastName(),
-                doctor.getSpecialization().name(),
+                doctor.getSpecialization(),
                 doctor.getAddress(),
                 doctor.getPhone(),
                 doctor.getClinicPhone()

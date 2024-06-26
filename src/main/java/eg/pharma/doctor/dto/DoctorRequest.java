@@ -1,11 +1,12 @@
 package eg.pharma.doctor.dto;
 
+import eg.enums.Specialization;
 import jakarta.persistence.EnumType;
 
 public class DoctorRequest {
     private String firstName;
     private String lastName;
-    private EnumType specialization;
+    private Specialization specialization;
     private String address;
     private String phone;
     private String clinicPhone;
@@ -18,7 +19,7 @@ public class DoctorRequest {
         return lastName;
     }
 
-    public EnumType getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
 
