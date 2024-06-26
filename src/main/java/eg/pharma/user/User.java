@@ -1,10 +1,11 @@
 package eg.pharma.user;
 
+import eg.pharma.audit.Audit;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "`user`")
-public class User {
+public class User extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +27,9 @@ public class User {
     private String phone;
 
     public User() {
+    }
+
+    public static User getCurrentUser() {
+        return null;
     }
 }

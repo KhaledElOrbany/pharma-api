@@ -1,10 +1,11 @@
 package eg.pharma.doctor;
 
 import eg.enums.Specialization;
+import eg.pharma.audit.Audit;
 import jakarta.persistence.*;
 
 @Entity
-public class Doctor {
+public class Doctor extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

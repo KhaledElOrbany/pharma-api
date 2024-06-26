@@ -3,13 +3,13 @@ package eg.pharma.doctor.dto;
 import eg.enums.Specialization;
 
 public class DoctorResource {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private Specialization specialization;
-    private String address;
-    private String phone;
-    private String clinicPhone;
+    private final Long id;
+    private final String firstName;
+    private final String lastName;
+    private final Specialization specialization;
+    private final String address;
+    private final String phone;
+    private final String clinicPhone;
 
     public DoctorResource(Long id, String firstName, String lastName, Specialization specialization, String address, String phone, String clinicPhone) {
         this.id = id;

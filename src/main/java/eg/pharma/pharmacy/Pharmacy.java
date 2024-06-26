@@ -1,12 +1,13 @@
 package eg.pharma.pharmacy;
 
+import eg.pharma.audit.Audit;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Pharmacy {
+public class Pharmacy extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
