@@ -3,8 +3,11 @@ package eg.pharma.doctor;
 import eg.enums.Specialization;
 import eg.pharma.audit.Audit;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
+@Table(name = "doctor")
+@SQLDelete(sql = "UPDATE doctor SET is_deleted = true WHERE id = ?")
 public class Doctor extends Audit {
 
     @Id
@@ -28,6 +31,8 @@ public class Doctor extends Audit {
 
     @Column(nullable = false)
     private String clinicPhone;
+
+    Boolean isDeleted = Boolean.FALSE;
 
     public Doctor() {
     }
