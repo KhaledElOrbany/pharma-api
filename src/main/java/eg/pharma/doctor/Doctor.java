@@ -1,9 +1,11 @@
 package eg.pharma.doctor;
 
+import eg.enums.DoctorClass;
 import eg.enums.Specialization;
 import eg.pharma.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.springframework.data.annotation.Persistent;
 
 @Entity
 @Table(name = "doctor")
@@ -32,7 +34,13 @@ public class Doctor extends Audit {
     @Column(nullable = false)
     private String clinicPhone;
 
+    @Enumerated(EnumType.STRING)
+    private DoctorClass doctorClass;
+
     Boolean isDeleted = Boolean.FALSE;
+
+    @Persistent
+    private int visitCount;
 
     public Doctor() {
     }
@@ -100,5 +108,30 @@ public class Doctor extends Audit {
 
     public void setClinicPhone(String clinicPhone) {
         this.clinicPhone = clinicPhone;
+    }
+
+    public DoctorClass getDoctorClass() {
+        return doctorClass;
+    }
+
+    public void setDoctorClass(DoctorClass doctorClass) {
+        this.doctorClass = doctorClass;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public int getVisitCount() {
+        return switch (this.doctorClass.name()) {
+            case "A" -> 3;
+            case "B" -> 2;
+            case "C" -> 1;
+            default -> 0;
+        };
     }
 }
