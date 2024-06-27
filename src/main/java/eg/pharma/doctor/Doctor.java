@@ -5,7 +5,6 @@ import eg.pharma.audit.Audit;
 import eg.pharma.doctorClass.DoctorClass;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
-import org.springframework.data.annotation.Persistent;
 
 @Entity
 @Table(name = "doctor")
@@ -34,13 +33,11 @@ public class Doctor extends Audit {
     @Column(nullable = false)
     private String clinicPhone;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_class_id", referencedColumnName = "id")
     private DoctorClass doctorClass;
 
     Boolean isDeleted = Boolean.FALSE;
-
-    @Persistent
-    private int visitCount;
 
     public Doctor() {
     }
@@ -124,13 +121,5 @@ public class Doctor extends Audit {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
-    }
-
-    public int getVisitCount() {
-        return visitCount;
-    }
-
-    public void setVisitCount(int visitCount) {
-        this.visitCount = visitCount;
     }
 }
