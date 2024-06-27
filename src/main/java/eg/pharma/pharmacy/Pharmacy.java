@@ -2,8 +2,11 @@ package eg.pharma.pharmacy;
 
 import eg.pharma.audit.Audit;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
+@Table(name = "pharmacy")
+@SQLDelete(sql = "UPDATE pharmacy SET is_deleted = true WHERE id = ?")
 public class Pharmacy extends Audit {
 
     @Id
@@ -21,6 +24,8 @@ public class Pharmacy extends Audit {
 
     @Column(nullable = false)
     private String phone;
+
+    Boolean isDeleted = Boolean.FALSE;
 
     public Pharmacy() {
     }
@@ -70,5 +75,13 @@ public class Pharmacy extends Audit {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }
