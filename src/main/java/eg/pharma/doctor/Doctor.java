@@ -1,8 +1,8 @@
 package eg.pharma.doctor;
 
-import eg.enums.DoctorClass;
 import eg.enums.Specialization;
 import eg.pharma.audit.Audit;
+import eg.pharma.doctorClass.DoctorClass;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.Persistent;
@@ -34,7 +34,7 @@ public class Doctor extends Audit {
     @Column(nullable = false)
     private String clinicPhone;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private DoctorClass doctorClass;
 
     Boolean isDeleted = Boolean.FALSE;
@@ -127,11 +127,10 @@ public class Doctor extends Audit {
     }
 
     public int getVisitCount() {
-        return switch (this.doctorClass.name()) {
-            case "A" -> 3;
-            case "B" -> 2;
-            case "C" -> 1;
-            default -> 0;
-        };
+        return visitCount;
+    }
+
+    public void setVisitCount(int visitCount) {
+        this.visitCount = visitCount;
     }
 }
