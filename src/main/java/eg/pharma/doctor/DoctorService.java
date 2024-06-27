@@ -18,9 +18,13 @@ public class DoctorService {
         this.doctorMapper = doctorMapper;
         this.doctorRepository = doctorRepository;
     }
+    
+    private Doctor findDoctorById(Long id) {
+        return doctorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+    }
 
     public DoctorResource getDoctorById(Long id) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+        Doctor doctor = findDoctorById(id);
         return doctorMapper.toResource(doctor);
     }
 
@@ -36,13 +40,14 @@ public class DoctorService {
     }
 
     public DoctorResource updateDoctor(Long id, DoctorRequest doctorRequest) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+        Doctor doctor = findDoctorById(id);
         doctor = doctorMapper.updateEntity(doctor, doctorRequest);
         doctor = doctorRepository.save(doctor);
         return doctorMapper.toResource(doctor);
     }
 
     public void deleteDoctor(Long id) {
-        doctorRepository.deleteById(id);
+        Doctor doctor = findDoctorById(id);
+        doctorRepository.delete(doctor);
     }
 }
