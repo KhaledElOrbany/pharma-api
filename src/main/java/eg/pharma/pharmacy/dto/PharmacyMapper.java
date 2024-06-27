@@ -1,9 +1,11 @@
 package eg.pharma.pharmacy.dto;
 
 import eg.pharma.pharmacy.Pharmacy;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PharmacyMapper {
 
     public List<PharmacyResource> toResourceList(List<Pharmacy> pharmacies) {
