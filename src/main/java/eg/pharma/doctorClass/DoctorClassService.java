@@ -3,7 +3,6 @@ package eg.pharma.doctorClass;
 import eg.pharma.doctorClass.dto.DoctorClassMapper;
 import eg.pharma.doctorClass.dto.DoctorClassRequest;
 import eg.pharma.doctorClass.dto.DoctorClassResource;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +19,7 @@ public class DoctorClassService {
     }
 
     private DoctorClass findDoctorClassById(Long id) {
-        return doctorClassRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Doctor class not found"));
+        return doctorClassRepository.findByIdAndIsDeleted(id, false);
     }
 
     public DoctorClassResource getDoctorClassById(Long id) {

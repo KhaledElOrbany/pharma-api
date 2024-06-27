@@ -12,6 +12,9 @@ public class DoctorClassMapper {
     }
 
     public DoctorClassResource toResource(DoctorClass doctorClass) {
+        if (doctorClass == null) {
+            return null;
+        }
         return new DoctorClassResource(
                 doctorClass.getId(),
                 doctorClass.getName(),

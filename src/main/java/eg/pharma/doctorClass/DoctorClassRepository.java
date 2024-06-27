@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DoctorClassRepository extends JpaRepository<DoctorClass, Long> {
+    DoctorClass findByIdAndIsDeleted(Long id, Boolean isDeleted);
 }

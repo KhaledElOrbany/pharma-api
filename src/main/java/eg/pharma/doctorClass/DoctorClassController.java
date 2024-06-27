@@ -29,17 +29,17 @@ public class DoctorClassController {
 
 
     @PostMapping
-    public DoctorClassResource createDoctor(@RequestBody DoctorClassRequest doctorRequest) {
+    public DoctorClassResource createDoctorClass(@RequestBody DoctorClassRequest doctorRequest) {
         return doctorClassService.createDoctorClass(doctorRequest);
     }
 
     @PutMapping(path = "/{id}")
-    public DoctorClassResource updateDoctor(@PathVariable("id") Long id, @RequestBody DoctorClassRequest doctorRequest) {
+    public DoctorClassResource updateDoctorClass(@PathVariable("id") Long id, @RequestBody DoctorClassRequest doctorRequest) {
         return doctorClassService.updateDoctorClass(id, doctorRequest);
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteDoctorClass(@PathVariable("id") Long id) {
         doctorClassService.deleteDoctor(id);
         return ResponseEntity.ok().build();
     }
