@@ -1,5 +1,6 @@
 package eg.pharma.api.doctor;
 
+import eg.pharma.api.config.base.BaseController;
 import eg.pharma.api.doctor.dto.DoctorRequest;
 import eg.pharma.api.doctor.dto.DoctorResource;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/doctor")
-public class DoctorController {
+public class DoctorController extends BaseController {
 
     private final DoctorService doctorService;
 

@@ -1,5 +1,6 @@
 package eg.pharma.api.medicine;
 
+import eg.pharma.api.config.base.BaseController;
 import eg.pharma.api.medicine.dto.MedicineRequest;
 import eg.pharma.api.medicine.dto.MedicineResource;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/medicine")
-public class MedicineController {
+public class MedicineController extends BaseController {
 
     private final MedicineService medicineService;
 

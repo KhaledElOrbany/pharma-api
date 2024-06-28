@@ -1,4 +1,4 @@
-package eg.pharma.api.config;
+package eg.pharma.api.config.interfaces;
 
 import java.util.List;
 

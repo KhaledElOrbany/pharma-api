@@ -1,6 +1,6 @@
 package eg.pharma.api.user.dto;
 
-import eg.pharma.api.config.IMapper;
+import eg.pharma.api.config.interfaces.IMapper;
 import eg.pharma.api.user.User;
 
 import java.util.List;

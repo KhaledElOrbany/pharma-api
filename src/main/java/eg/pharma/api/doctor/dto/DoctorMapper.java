@@ -1,6 +1,6 @@
 package eg.pharma.api.doctor.dto;
 
-import eg.pharma.api.config.IMapper;
+import eg.pharma.api.config.interfaces.IMapper;
 import eg.pharma.api.doctor.Doctor;
 import eg.pharma.api.doctorClass.dto.DoctorClassMapper;
 import eg.pharma.api.doctorClass.dto.DoctorClassResource;

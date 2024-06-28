@@ -1,6 +1,6 @@
 package eg.pharma.api.medicine.dto;
 
-import eg.pharma.api.config.IMapper;
+import eg.pharma.api.config.interfaces.IMapper;
 import eg.pharma.api.medicine.Medicine;
 import org.springframework.stereotype.Service;
 
