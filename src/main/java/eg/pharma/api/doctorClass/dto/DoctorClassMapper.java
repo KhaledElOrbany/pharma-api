@@ -1,5 +1,6 @@
 package eg.pharma.api.doctorClass.dto;
 
+import eg.pharma.api.config.IMapper;
 import eg.pharma.api.doctor.dto.DoctorMapper;
 import eg.pharma.api.doctor.dto.DoctorResource;
 import eg.pharma.api.doctorClass.DoctorClass;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DoctorClassMapper {
+public class DoctorClassMapper implements IMapper<DoctorClass, DoctorClassResource, DoctorClassRequest> {
 
     private final DoctorMapper doctorMapper;
 
@@ -18,10 +19,12 @@ public class DoctorClassMapper {
         this.doctorMapper = doctorMapper;
     }
 
+    @Override
     public List<DoctorClassResource> toResourceList(List<DoctorClass> doctorClasses) {
         return doctorClasses.stream().map(this::toResource).toList();
     }
 
+    @Override
     public DoctorClassResource toResource(DoctorClass doctorClass) {
         if (doctorClass == null) {
             return null;
@@ -53,6 +56,7 @@ public class DoctorClassMapper {
         );
     }
 
+    @Override
     public DoctorClass toEntity(DoctorClassRequest doctorRequest) {
         return new DoctorClass(
                 doctorRequest.getName(),
@@ -62,6 +66,7 @@ public class DoctorClassMapper {
         );
     }
 
+    @Override
     public DoctorClass updateEntity(DoctorClass doctorClass, DoctorClassRequest doctorClassRequest) {
         doctorClass.setName(doctorClassRequest.getName());
         doctorClass.setVisitCount(doctorClassRequest.getVisitCount());
