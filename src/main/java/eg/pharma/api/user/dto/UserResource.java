@@ -1,4 +1,17 @@
 package eg.pharma.api.user.dto;
 
-public class UserResource {
+import eg.pharma.api.Role.Role;
+
+import java.util.List;
+
+public record UserResource(
+        Long id,
+        String username,
+        String email,
+        String firstName,
+        String lastName,
+        String phone,
+        String address,
+        List<Role> roles
+) {
 }
