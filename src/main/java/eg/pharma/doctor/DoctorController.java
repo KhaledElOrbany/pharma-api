@@ -47,4 +47,9 @@ public class DoctorController {
     public DoctorResource assignClass(@PathVariable("id") Long id, @PathVariable("classId") Long classId) {
         return doctorService.assignClass(id, classId);
     }
+
+    @GetMapping(path = "/listByClass/{classId}")
+    public List<DoctorResource> getDoctorsByClass(@PathVariable("classId") Long classId) {
+        return doctorService.getDoctorsByClass(classId);
+    }
 }

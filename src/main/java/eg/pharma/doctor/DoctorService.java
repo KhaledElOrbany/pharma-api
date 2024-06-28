@@ -4,7 +4,7 @@ import eg.pharma.doctor.dto.DoctorMapper;
 import eg.pharma.doctor.dto.DoctorRequest;
 import eg.pharma.doctor.dto.DoctorResource;
 import eg.pharma.doctorClass.DoctorClass;
-import eg.pharma.doctorClass.DoctorClassRepository;
+import eg.pharma.doctorClass.DoctorClassService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ public class DoctorService {
 
     private final DoctorMapper doctorMapper;
     private final DoctorRepository doctorRepository;
-    private final DoctorClassRepository doctorClassRepository;
+    private final DoctorClassService doctorClassService;
 
-    public DoctorService(DoctorMapper doctorMapper, DoctorRepository doctorRepository, DoctorClassRepository doctorClassRepository) {
+    public DoctorService(DoctorMapper doctorMapper, DoctorRepository doctorRepository, DoctorClassService doctorClassService) {
         this.doctorMapper = doctorMapper;
         this.doctorRepository = doctorRepository;
-        this.doctorClassRepository = doctorClassRepository;
+        this.doctorClassService = doctorClassService;
     }
 
     private Doctor findDoctorById(Long id) {
@@ -57,9 +57,15 @@ public class DoctorService {
 
     public DoctorResource assignClass(Long id, Long classId) {
         Doctor doctor = findDoctorById(id);
-        DoctorClass doctorClass = doctorClassRepository.findByIdAndIsDeleted(classId, false);
+        DoctorClass doctorClass = doctorClassService.findDoctorClassById(classId);
         doctor.setDoctorClass(doctorClass);
         doctor = doctorRepository.save(doctor);
         return doctorMapper.toResource(doctor);
+    }
+
+    public List<DoctorResource> getDoctorsByClass(Long classId) {
+        DoctorClass doctorClass = doctorClassService.findDoctorClassById(classId);
+        List<Doctor> doctors = doctorRepository.findAllByDoctorClass(doctorClass);
+        return doctorMapper.toResourceList(doctors);
     }
 }
