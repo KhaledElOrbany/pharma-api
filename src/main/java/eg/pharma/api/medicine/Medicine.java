@@ -26,28 +26,11 @@ public class Medicine extends Audit {
     private String barcode;
 
     @Column(nullable = false)
-    private String manufacturer;
-
-    @Column(nullable = false)
-    private String supplier;
-
-    @Column(nullable = false)
-    private String unit;
-
-    @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false)
-    private int quantity;
-
-    @Column(nullable = false)
-    private String category;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MedicineType type;
 
-    @Column(nullable = false)
     private String notes;
 
     Boolean isDeleted = Boolean.FALSE;
@@ -55,17 +38,12 @@ public class Medicine extends Audit {
     public Medicine() {
     }
 
-    public Medicine(String name, String activeIngredient, String description, String barcode, String manufacturer, String supplier, String unit, double price, int quantity, String category, MedicineType type, String notes) {
+    public Medicine(String name, String activeIngredient, String description, String barcode, double price, MedicineType type, String notes) {
         this.name = name;
         this.activeIngredient = activeIngredient;
         this.description = description;
         this.barcode = barcode;
-        this.manufacturer = manufacturer;
-        this.supplier = supplier;
-        this.unit = unit;
         this.price = price;
-        this.quantity = quantity;
-        this.category = category;
         this.type = type;
         this.notes = notes;
     }
@@ -110,52 +88,12 @@ public class Medicine extends Audit {
         this.barcode = barcode;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     public double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public MedicineType getType() {
