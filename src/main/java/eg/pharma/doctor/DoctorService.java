@@ -3,6 +3,8 @@ package eg.pharma.doctor;
 import eg.pharma.doctor.dto.DoctorMapper;
 import eg.pharma.doctor.dto.DoctorRequest;
 import eg.pharma.doctor.dto.DoctorResource;
+import eg.pharma.doctorClass.DoctorClass;
+import eg.pharma.doctorClass.DoctorClassRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,14 @@ public class DoctorService {
 
     private final DoctorMapper doctorMapper;
     private final DoctorRepository doctorRepository;
+    private final DoctorClassRepository doctorClassRepository;
 
-    public DoctorService(DoctorMapper doctorMapper, DoctorRepository doctorRepository) {
+    public DoctorService(DoctorMapper doctorMapper, DoctorRepository doctorRepository, DoctorClassRepository doctorClassRepository) {
         this.doctorMapper = doctorMapper;
         this.doctorRepository = doctorRepository;
+        this.doctorClassRepository = doctorClassRepository;
     }
-    
+
     private Doctor findDoctorById(Long id) {
         return doctorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
     }
@@ -49,5 +53,13 @@ public class DoctorService {
     public void deleteDoctor(Long id) {
         Doctor doctor = findDoctorById(id);
         doctorRepository.delete(doctor);
+    }
+
+    public DoctorResource assignClass(Long id, Long classId) {
+        Doctor doctor = findDoctorById(id);
+        DoctorClass doctorClass = doctorClassRepository.findByIdAndIsDeleted(classId, false);
+        doctor.setDoctorClass(doctorClass);
+        doctor = doctorRepository.save(doctor);
+        return doctorMapper.toResource(doctor);
     }
 }

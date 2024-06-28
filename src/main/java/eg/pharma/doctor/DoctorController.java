@@ -42,4 +42,9 @@ public class DoctorController {
         doctorService.deleteDoctor(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping(path = "/{id}/assignClass/{classId}")
+    public DoctorResource assignClass(@PathVariable("id") Long id, @PathVariable("classId") Long classId) {
+        return doctorService.assignClass(id, classId);
+    }
 }

@@ -1,11 +1,16 @@
 package eg.pharma.doctorClass;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import eg.pharma.audit.Audit;
 import eg.pharma.doctor.Doctor;
+import eg.pharma.doctor.dto.DoctorMapper;
+import eg.pharma.doctor.dto.DoctorResource;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +33,7 @@ public class DoctorClass extends Audit {
     private Boolean isActive = Boolean.TRUE;
     private Boolean isDeleted = Boolean.FALSE;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "doctorClass")
     private Set<Doctor> doctors = new HashSet<>();
 

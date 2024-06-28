@@ -1,6 +1,7 @@
 package eg.pharma.doctor.dto;
 
 import eg.enums.Specialization;
+import eg.pharma.doctorClass.dto.DoctorClassResource;
 
 public record DoctorResource(
         Long id,
@@ -9,6 +10,7 @@ public record DoctorResource(
         Specialization specialization,
         String address,
         String phone,
-        String clinicPhone
+        String clinicPhone,
+        DoctorClassResource doctorClass
 ) {
 }

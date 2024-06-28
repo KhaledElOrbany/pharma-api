@@ -1,5 +1,6 @@
 package eg.pharma.doctor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import eg.enums.Specialization;
 import eg.pharma.audit.Audit;
 import eg.pharma.doctorClass.DoctorClass;
@@ -33,7 +34,8 @@ public class Doctor extends Audit {
     @Column(nullable = false)
     private String clinicPhone;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "doctor_class_id", referencedColumnName = "id")
     private DoctorClass doctorClass;
 
