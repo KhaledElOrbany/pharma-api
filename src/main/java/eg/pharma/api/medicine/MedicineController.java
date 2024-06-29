@@ -28,12 +28,12 @@ public class MedicineController extends BaseController {
     }
 
     @PostMapping
-    public MedicineResource createMedicine(MedicineRequest medicineRequest) {
+    public MedicineResource createMedicine(@RequestBody MedicineRequest medicineRequest) {
         return medicineService.createMedicine(medicineRequest);
     }
 
     @PutMapping("/{id}")
-    public MedicineResource updateMedicine(@PathVariable("id") Long id, MedicineRequest medicineRequest) {
+    public MedicineResource updateMedicine(@PathVariable("id") Long id, @RequestBody MedicineRequest medicineRequest) {
         return medicineService.updateMedicine(id, medicineRequest);
     }
 
