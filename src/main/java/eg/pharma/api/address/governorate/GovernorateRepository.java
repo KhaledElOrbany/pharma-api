@@ -1,4 +1,8 @@
 package eg.pharma.api.address.governorate;
 
-public interface GovernorateRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface GovernorateRepository extends JpaRepository<Governorate, Long> {
 }
