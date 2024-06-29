@@ -13,24 +13,24 @@ public abstract class Audit {
     @OneToOne
     private User updatedBy;
 
-    @Column(name = "date_created")
-    private LocalDateTime dateCreated;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void onPrePersist() {
         this.setCreatedBy(User.getCurrentUser());
         this.setUpdatedBy(User.getCurrentUser());
-        this.setDateCreated(LocalDateTime.now());
-        this.setLastUpdated(LocalDateTime.now());
+        this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
     }
 
     @PreUpdate
     public void onPreUpdate() {
         this.setUpdatedBy(User.getCurrentUser());
-        this.setLastUpdated(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
     }
 
     public User getCreatedBy() {
@@ -49,19 +49,19 @@ public abstract class Audit {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
