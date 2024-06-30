@@ -1,6 +1,7 @@
 package eg.pharma.api.Role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import eg.pharma.api.permission.Permission;
 import eg.pharma.api.user.User;
 import jakarta.persistence.*;
 
@@ -22,6 +23,15 @@ public class Role {
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "roles_privileges",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilege_id", referencedColumnName = "id"))
+    private Set<Permission> permissions = new HashSet<>();
 
     private Boolean isDeleted = Boolean.FALSE;
 
@@ -71,5 +81,13 @@ public class Role {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 }
