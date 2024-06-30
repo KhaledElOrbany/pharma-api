@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Entity
@@ -23,13 +24,19 @@ public class User extends Audit {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false, unique = true)
+    private String userName;
+
     @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 11)
+    private Boolean isEnabled = Boolean.TRUE;
+    private Boolean tokenExpired;
+
+    @Column(length = 11)
     private String phone;
 
     private Boolean isDeleted = Boolean.FALSE;
@@ -48,6 +55,7 @@ public class User extends Audit {
     public User(String firstName, String lastName, String email, String password, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userName = (firstName + "_" + lastName).toLowerCase(Locale.ROOT);
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -75,6 +83,14 @@ public class User extends Audit {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -115,6 +131,22 @@ public class User extends Audit {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public Boolean getTokenExpired() {
+        return tokenExpired;
+    }
+
+    public void setTokenExpired(Boolean tokenExpired) {
+        this.tokenExpired = tokenExpired;
     }
 
     public static User getCurrentUser() {
