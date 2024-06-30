@@ -25,7 +25,7 @@ public class User extends Audit {
     private String lastName;
 
     @Column(nullable = false, unique = true)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String email;
@@ -55,7 +55,7 @@ public class User extends Audit {
     public User(String firstName, String lastName, String email, String password, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = (firstName + "_" + lastName).toLowerCase(Locale.ROOT);
+        this.username = (firstName + "_" + lastName).toLowerCase(Locale.ROOT);
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -85,12 +85,12 @@ public class User extends Audit {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
