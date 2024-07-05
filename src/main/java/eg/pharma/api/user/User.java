@@ -4,14 +4,18 @@ import eg.pharma.api.Role.Role;
 import eg.pharma.api.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "`user`")
 @SQLDelete(sql = "UPDATE `user` SET is_deleted = true WHERE id = ?")
-public class User extends Audit {
+public class User extends Audit implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,9 @@ public class User extends Audit {
 
     @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
+    private String username;
 
     @Column(nullable = false)
     private String email;
@@ -48,6 +55,7 @@ public class User extends Audit {
     public User(String firstName, String lastName, String email, String password, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = firstName + "_" + lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -85,8 +93,38 @@ public class User extends Audit {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public void setPassword(String password) {
