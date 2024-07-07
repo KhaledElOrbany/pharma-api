@@ -1,4 +1,4 @@
-package eg.pharma.api.Role;
+package eg.pharma.api.role;
 
 import org.springframework.stereotype.Service;
 

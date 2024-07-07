@@ -1,6 +1,6 @@
 package eg.pharma.api.user;
 
-import eg.pharma.api.Role.Role;
+import eg.pharma.api.role.Role;
 import eg.pharma.api.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;

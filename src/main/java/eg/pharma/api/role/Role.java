@@ -1,4 +1,4 @@
-package eg.pharma.api.Role;
+package eg.pharma.api.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import eg.pharma.api.user.User;

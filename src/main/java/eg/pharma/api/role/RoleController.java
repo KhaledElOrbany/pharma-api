@@ -1,4 +1,4 @@
-package eg.pharma.api.Role;
+package eg.pharma.api.role;
 
 import eg.pharma.api.config.base.BaseController;
 
