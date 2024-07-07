@@ -1,7 +1,12 @@
 package eg.pharma.api.address.governorate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import eg.pharma.api.address.city.City;
 import eg.pharma.api.audit.Audit;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "governorate")
@@ -16,6 +21,10 @@ public class Governorate extends Audit {
 
     @Column(nullable = false)
     private String nameEn;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "governorate")
+    private Set<City> cities = new HashSet<>();
 
     public Governorate() {
     }
@@ -48,5 +57,13 @@ public class Governorate extends Audit {
 
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
+    }
+
+    public Set<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(Set<City> cities) {
+        this.cities = cities;
     }
 }

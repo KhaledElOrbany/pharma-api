@@ -54,5 +54,13 @@ public class City extends Audit {
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
     }
+
+    public Governorate getGovernorate() {
+        return governorate;
+    }
+
+    public void setGovernorate(Governorate governorate) {
+        this.governorate = governorate;
+    }
 }
 
