@@ -4,10 +4,6 @@ import eg.pharma.api.role.Role;
 import eg.pharma.api.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "`user`")
 @SQLDelete(sql = "UPDATE `user` SET is_deleted = true WHERE id = ?")
-public class User extends Audit implements UserDetails {
+public class User extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,38 +89,8 @@ public class User extends Audit implements UserDetails {
         this.email = email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
     }
 
     public void setPassword(String password) {
