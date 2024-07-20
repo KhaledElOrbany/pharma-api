@@ -39,7 +39,7 @@ public class User extends Audit implements UserDetails {
 
     private Boolean isDeleted = Boolean.FALSE;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
