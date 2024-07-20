@@ -1,6 +1,6 @@
 package eg.pharma.api.features.auth.dto;
 
-import eg.pharma.api.enums.Role;
+import eg.pharma.api.features.role.Role;
 
 public class RegistrationRequest {
     private String firstName;

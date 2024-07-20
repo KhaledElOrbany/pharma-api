@@ -1,6 +1,6 @@
 package eg.pharma.api.features.user;
 
-import eg.pharma.api.enums.Role;
+import eg.pharma.api.features.role.Role;
 import eg.pharma.api.features.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
@@ -40,7 +40,8 @@ public class User extends Audit implements UserDetails {
 
     private Boolean isDeleted = Boolean.FALSE;
 
-    @Enumerated(value = EnumType.STRING)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
     public User() {
@@ -89,7 +90,7 @@ public class User extends Audit implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.role.name()));
+        return List.of(new SimpleGrantedAuthority(this.role.getName()));
     }
 
     public String getPassword() {
