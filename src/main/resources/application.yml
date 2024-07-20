@@ -22,3 +22,8 @@ spring:
         column_ordering_strategy: legacy
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+security:
+  jwt:
+    secret-key: e9f6f0c0e9202971fe7217a0b448dbc9d0adcdfaed9a37a212c16ac7b4c761fe
+    expiration-time: 3600000
