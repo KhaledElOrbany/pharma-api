@@ -11,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthenticationService {
 
@@ -32,6 +34,12 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegistrationRequest request) {
+        String username = request.getFirstName() + "_" + request.getLastName();
+        Optional<User> existingUser = userRepository.findByUsername(username);
+        if (existingUser.isPresent()) {
+            throw new IllegalStateException("User with username " + username + " already exists!");
+        }
+
         User user = new User(
                 request.getFirstName(),
                 request.getLastName(),
