@@ -33,7 +33,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(RegistrationRequest request) {
+    public AuthenticationResponse create(RegistrationRequest request) {
         String username = request.getFirstName() + "_" + request.getLastName();
         Optional<User> existingUser = userRepository.findByUsername(username);
         if (existingUser.isPresent()) {
