@@ -145,7 +145,7 @@ public class User extends Audit implements UserDetails {
         return this.role;
     }
 
-    public void setRoles(Role role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
