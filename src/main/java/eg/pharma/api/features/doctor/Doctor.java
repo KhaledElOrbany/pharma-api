@@ -35,7 +35,7 @@ public class Doctor extends Audit {
     private String clinicPhone;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "doctor_class_id", referencedColumnName = "id")
     private DoctorClass doctorClass;
 
