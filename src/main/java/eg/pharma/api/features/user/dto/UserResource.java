@@ -9,7 +9,6 @@ public record UserResource(
         String firstName,
         String lastName,
         String phone,
-        String address,
         Role role
 ) {
 }

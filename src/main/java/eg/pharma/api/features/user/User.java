@@ -26,10 +26,9 @@ public class User extends Audit implements UserDetails {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -47,10 +46,10 @@ public class User extends Audit implements UserDetails {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, String phone) {
+    public User(String username, String firstName, String lastName, String email, String password, String phone) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = firstName + "_" + lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
