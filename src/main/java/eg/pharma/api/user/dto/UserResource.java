@@ -1,6 +1,6 @@
 package eg.pharma.api.user.dto;
 
-import eg.pharma.api.role.Role;
+import eg.pharma.enums.Role;
 
 import java.util.List;
 

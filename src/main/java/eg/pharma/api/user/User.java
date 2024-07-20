@@ -1,17 +1,20 @@
 package eg.pharma.api.user;
 
-import eg.pharma.api.role.Role;
+import eg.pharma.enums.Role;
 import eg.pharma.api.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
-import java.util.HashSet;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "`user`")
 @SQLDelete(sql = "UPDATE `user` SET is_deleted = true WHERE id = ?")
-public class User extends Audit {
+public class User extends Audit implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +40,8 @@ public class User extends Audit {
 
     private Boolean isDeleted = Boolean.FALSE;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
     public User() {
     }
@@ -89,8 +87,38 @@ public class User extends Audit {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
     public String getPassword() {
-        return password;
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public void setPassword(String password) {
@@ -113,12 +141,12 @@ public class User extends Audit {
         isDeleted = deleted;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return this.role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRoles(Role role) {
+        this.role = role;
     }
 
     public static User getCurrentUser() {

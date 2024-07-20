@@ -1,26 +1,24 @@
-spring:
-  application:
-    name: Pharma
-  jpa:
-    database: postgresql
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        column_ordering_strategy: legacy
-    open-in-view: true
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/pharma
-    username: el3orb
-    password: Pa$$w0rd!
-
 server:
   address: 0.0.0.0
   port: 8080
 
-security:
-  jwt:
-    secret-key: e9f6f0c0e9202971fe7217a0b448dbc9d0adcdfaed9a37a212c16ac7b4c761fe
-    expiration-time: 3600000
+spring:
+  application:
+    name: Pharma
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pharma
+    username: el3orb
+    password: Pa$$w0rd!
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+    show-sql: false
+    database: postgresql
+    properties:
+      hibernate:
+        column_ordering_strategy: legacy
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
