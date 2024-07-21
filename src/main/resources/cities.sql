@@ -1,4 +1,5 @@
-INSERT INTO city (governorate_id, name_ar, name_en, created_at, updated_at) VALUES (1, '15 مايو', '15 May', now(), now()),
+INSERT INTO public.city (governorate_id, name_ar, name_en, created_at, updated_at)
+VALUES (1, '15 مايو', '15 May', now(), now()),
        (1, 'الازبكية', 'Al Azbakeyah', now(), now()),
        (1, 'البساتين', 'Al Basatin', now(), now()),
        (1, 'التبين', 'Tebin', now(), now()),

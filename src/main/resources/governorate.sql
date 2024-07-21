@@ -1,4 +1,5 @@
-INSERT INTO governorate (id, name_ar, name_en, created_at, updated_at) VALUES (1, 'القاهرة', 'Cairo', NOW(), NOW()),
+INSERT INTO public.governorate (id, name_ar, name_en, created_at, updated_at)
+VALUES (1, 'القاهرة', 'Cairo', NOW(), NOW()),
        (2, 'الجيزة', 'Giza', NOW(), NOW()),
        (3, 'الأسكندرية', 'Alexandria', NOW(), NOW()),
        (4, 'الدقهلية', 'Dakahlia', NOW(), NOW()),
