@@ -10,7 +10,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex) {
+        HttpStatus status = HttpStatusMapper.getHttpStatus(ex.getErrorCode());
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getErrorCode());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
+    public record ErrorResponse(
+            String message,
+            String code
+    ) {
     }
 }
