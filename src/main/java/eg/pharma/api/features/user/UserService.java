@@ -1,5 +1,6 @@
 package eg.pharma.api.features.user;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.user.dto.UserMapper;
 import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
@@ -30,7 +31,7 @@ public class UserService {
     public UserResource create(UserRequest request) {
         Optional<User> existingUser = userRepository.findByUsername(request.getUsername());
         if (existingUser.isPresent()) {
-            throw new IllegalStateException("User with username " + request.getUsername() + " already exists!");
+            throw new BusinessException("User with username " + request.getUsername() + " already exists!", "409");
         }
 
         User user = new User(
