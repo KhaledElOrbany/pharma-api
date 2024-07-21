@@ -1,14 +1,21 @@
 package eg.pharma.api.features.user.dto;
 
-import eg.pharma.api.features.role.Role;
+import eg.pharma.api.features.role.dto.RoleMapper;
 import eg.pharma.api.interfaces.IMapper;
 import eg.pharma.api.features.user.User;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserMapper implements IMapper<User, UserResource, UserRequest> {
+
+    private final RoleMapper roleMapper;
+
+    public UserMapper(@Lazy RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
+    }
 
     @Override
     public List<UserResource> toResourceList(List<User> users) {
@@ -24,7 +31,7 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPhone(),
-                user.getRole()
+                roleMapper.toResource(user.getRole())
         );
     }
 

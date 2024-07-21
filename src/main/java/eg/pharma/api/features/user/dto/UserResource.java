@@ -1,6 +1,6 @@
 package eg.pharma.api.features.user.dto;
 
-import eg.pharma.api.features.role.Role;
+import eg.pharma.api.features.role.dto.RoleResource;
 
 public record UserResource(
         Long id,
@@ -9,6 +9,6 @@ public record UserResource(
         String firstName,
         String lastName,
         String phone,
-        Role role
+        RoleResource role
 ) {
 }

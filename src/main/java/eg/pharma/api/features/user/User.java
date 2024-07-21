@@ -26,7 +26,10 @@ public class User extends Audit implements UserDetails {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private String username;
 
     private String email;
@@ -34,7 +37,11 @@ public class User extends Audit implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 11)
+    @Column(
+            nullable = false,
+            unique = true,
+            length = 11
+    )
     private String phone;
 
     private Boolean isDeleted = Boolean.FALSE;
@@ -99,6 +106,10 @@ public class User extends Audit implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
