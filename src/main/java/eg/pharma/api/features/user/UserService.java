@@ -3,16 +3,13 @@ package eg.pharma.api.features.user;
 import eg.pharma.api.features.user.dto.UserMapper;
 import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -26,12 +23,6 @@ public class UserService implements UserDetailsService {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
     public UserResource create(UserRequest request) {

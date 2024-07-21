@@ -37,6 +37,6 @@ public class AuthenticationService {
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.generateToken(user);
 
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(token, jwtService.getExpirationTime());
     }
 }

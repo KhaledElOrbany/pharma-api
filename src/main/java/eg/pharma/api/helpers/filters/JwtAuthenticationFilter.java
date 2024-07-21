@@ -1,6 +1,6 @@
 package eg.pharma.api.helpers.filters;
 
-import eg.pharma.api.features.user.UserService;
+import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.helpers.services.JwtService;
 import org.springframework.lang.NonNull;
 import jakarta.servlet.FilterChain;
@@ -16,19 +16,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final HandlerExceptionResolver handlerExceptionResolver;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserService userService, HandlerExceptionResolver handlerExceptionResolver) {
+    public JwtAuthenticationFilter(
+            JwtService jwtService,
+            UserDetailsServiceImpl userDetailsServiceImpl
+            , HandlerExceptionResolver handlerExceptionResolver) {
         this.jwtService = jwtService;
-        this.userService = userService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
@@ -51,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             if (username != null && authentication == null) {
-                UserDetails userDetails = userService.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 
                 if (jwtService.isTokenValid(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
