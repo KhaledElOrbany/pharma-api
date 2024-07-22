@@ -10,6 +10,7 @@ spring:
     username: el3orb
     password: Pa$$w0rd!
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,3 +23,17 @@ spring:
         column_ordering_strategy: legacy
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  config:
+    import: optional:secrets.yml
