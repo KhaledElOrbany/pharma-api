@@ -9,6 +9,7 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(String message) {
         super(message);
+        this.errorCode = "400";
     }
 
     public BusinessException(String message, String errorCode) {

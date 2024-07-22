@@ -6,6 +6,7 @@ public class HttpStatusMapper {
 
     public static HttpStatus getHttpStatus(String errorCode) {
         return switch (errorCode) {
+            case "401" -> HttpStatus.UNAUTHORIZED;
             case "403" -> HttpStatus.FORBIDDEN;
             case "404" -> HttpStatus.NOT_FOUND;
             case "409" -> HttpStatus.CONFLICT;

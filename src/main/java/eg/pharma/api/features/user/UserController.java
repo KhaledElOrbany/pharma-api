@@ -3,6 +3,7 @@ package eg.pharma.api.features.user;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +18,6 @@ public class UserController extends BaseController {
         this.userService = userService;
     }
 
-    @PostMapping("/create")
-    public UserResource create(@RequestBody UserRequest request) {
-        return userService.create(request);
-    }
-
-
     @GetMapping(path = "/{id}")
     public UserResource getUserById(@PathVariable("id") Long id) {
         return userService.getUserById(id);
@@ -31,5 +26,21 @@ public class UserController extends BaseController {
     @GetMapping("/list")
     public List<UserResource> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @PostMapping("/create")
+    public UserResource create(@RequestBody UserRequest request) {
+        return userService.create(request);
+    }
+
+    @PutMapping(path = "/{id}")
+    public UserResource updateUser(@PathVariable("id") Long id, @RequestBody UserRequest userRequest) {
+        return userService.updateUser(id, userRequest);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
 }

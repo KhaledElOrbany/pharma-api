@@ -1,5 +1,6 @@
 package eg.pharma.api.helpers.filters;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.helpers.services.JwtService;
 import org.springframework.lang.NonNull;
@@ -14,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
@@ -23,15 +23,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final HandlerExceptionResolver handlerExceptionResolver;
 
-    public JwtAuthenticationFilter(
-            JwtService jwtService,
-            UserDetailsServiceImpl userDetailsServiceImpl
-            , HandlerExceptionResolver handlerExceptionResolver) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsServiceImpl) {
         this.jwtService = jwtService;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
     @Override
@@ -70,7 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         } catch (Exception exception) {
-            handlerExceptionResolver.resolveException(request, response, null, exception);
+            throw new BusinessException("Session expired!", "401");
         }
     }
 }
