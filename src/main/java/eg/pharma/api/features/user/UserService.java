@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +56,6 @@ public class UserService {
             mail.setSubject("Welcome to Pharma!");
             mail.setTo(new String[]{user.getEmail()});
             mail.setBody("Your account has been created by Dr.Wagdy. Your username is: " + user.getUsername());
-            mail.setSentDate(new Date());
             mailService.sendEmail(mail);
         }
 
@@ -87,5 +87,22 @@ public class UserService {
     public void deleteUser(Long id) {
         User user = findUserById(id);
         userRepository.delete(user);
+    }
+
+    public String resetPassword(HashMap<String, String> params) {
+        String email = params.get("email");
+
+        try {
+            Mail mail = new Mail();
+            mail.setBody("");
+            mail.setTo(new String[]{email});
+            mail.setSubject("");
+
+            mailService.sendEmail(mail);
+        } catch (Exception ex) {
+           throw new BusinessException("");
+        }
+
+        return "Email sent successfully!";
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class MailService {
 
@@ -26,7 +28,7 @@ public class MailService {
         message.setText(mail.getBody());
         message.setSubject(mail.getSubject());
         message.setTo(mail.getTo());
-        message.setSentDate(mail.getSentDate());
+        message.setSentDate(new Date());
 
         try {
             mailSender.send(message);

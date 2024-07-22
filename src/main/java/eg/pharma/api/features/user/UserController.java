@@ -6,6 +6,7 @@ import eg.pharma.api.features.user.dto.UserResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -42,5 +43,10 @@ public class UserController extends BaseController {
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestBody HashMap<String, String> requestBody) {
+        return ResponseEntity.ok(userService.resetPassword(requestBody));
     }
 }
