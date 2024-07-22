@@ -1,6 +1,5 @@
 package eg.pharma.api.config;
 
-import eg.pharma.api.exception.CustomAccessDeniedHandler;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.helpers.filters.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -31,11 +30,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    CustomAccessDeniedHandler customAccessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -43,9 +37,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/user/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN")
                         .anyRequest().authenticated()
-                )
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedHandler(customAccessDeniedHandler())
                 )
                 .userDetailsService(userDetailsService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

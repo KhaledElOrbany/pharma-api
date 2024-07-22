@@ -1,5 +1,6 @@
 package eg.pharma.api.helpers.filters;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.helpers.services.JwtService;
 import org.springframework.lang.NonNull;
@@ -70,7 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         } catch (Exception exception) {
-            handlerExceptionResolver.resolveException(request, response, null, exception);
+            throw new BusinessException("Session expired!", "401");
         }
     }
 }
