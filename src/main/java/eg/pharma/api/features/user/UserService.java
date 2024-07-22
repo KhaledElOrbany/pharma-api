@@ -48,18 +48,30 @@ public class UserService {
         return userMapper.toResource(user);
     }
 
-    private User findDoctorById(Long id) {
+    private User findUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     public UserResource getUserById(Long id) {
-        User user = findDoctorById(id);
+        User user = findUserById(id);
         return userMapper.toResource(user);
     }
 
     public List<UserResource> getAllUsers() {
         List<User> users = userRepository.findAll();
         return userMapper.toResourceList(users);
+    }
+
+    public UserResource updateUser(Long id, UserRequest userRequest) {
+        User user = findUserById(id);
+        user = userMapper.updateEntity(user, userRequest);
+        user = userRepository.save(user);
+        return userMapper.toResource(user);
+    }
+
+    public void deleteUser(Long id) {
+        User user = findUserById(id);
+        userRepository.delete(user);
     }
 }
