@@ -17,10 +17,6 @@ public class BaseController {
         this.params = webRequest.getParameterMap();
     }
 
-    protected User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
     protected <T, M> HashMap<String, Object> respond(T data, M meta) {
         HashMap<String, Object> response = new HashMap<>();
         response.put("data", data);

@@ -159,8 +159,4 @@ public class User extends Audit implements UserDetails {
     public void setRole(Role role) {
         this.role = role;
     }
-
-    public static User getCurrentUser() {
-        return null;
-    }
 }

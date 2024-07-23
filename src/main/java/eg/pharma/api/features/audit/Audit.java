@@ -1,6 +1,7 @@
 package eg.pharma.api.features.audit;
 
 import eg.pharma.api.features.user.User;
+import eg.pharma.api.helpers.utils.SecurityUtil;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -21,15 +22,15 @@ public abstract class Audit {
 
     @PrePersist
     public void onPrePersist() {
-        this.setCreatedBy(User.getCurrentUser());
-        this.setUpdatedBy(User.getCurrentUser());
+        this.setCreatedBy(SecurityUtil.getCurrentUser());
+        this.setUpdatedBy(SecurityUtil.getCurrentUser());
         this.setCreatedAt(LocalDateTime.now());
         this.setUpdatedAt(LocalDateTime.now());
     }
 
     @PreUpdate
     public void onPreUpdate() {
-        this.setUpdatedBy(User.getCurrentUser());
+        this.setUpdatedBy(SecurityUtil.getCurrentUser());
         this.setUpdatedAt(LocalDateTime.now());
     }
 
