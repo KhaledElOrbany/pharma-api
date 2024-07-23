@@ -34,7 +34,7 @@ public class UserController extends BaseController {
         return userService.create(request);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "update/{id}")
     public UserResource updateUser(@PathVariable("id") Long id, @RequestBody UserRequest userRequest) {
         return userService.updateUser(id, userRequest);
     }

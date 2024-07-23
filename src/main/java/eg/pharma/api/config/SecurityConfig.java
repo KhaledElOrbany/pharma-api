@@ -1,5 +1,7 @@
 package eg.pharma.api.config;
 
+import eg.pharma.api.features.role.RoleService;
+import eg.pharma.api.features.role.dto.RoleResource;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.helpers.filters.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -12,18 +14,23 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final RoleService roleService;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public SecurityConfig(
+            RoleService roleService,
             UserDetailsServiceImpl userDetailsService,
             AuthenticationProvider authenticationProvider,
             JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.roleService = roleService;
         this.userDetailsService = userDetailsService;
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -31,12 +38,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String[] allAuthorities = roleService.getAllRoles()
+                .stream().map(RoleResource::name)
+                .toList().toArray(new String[0]);
+        String[] adminAuthorities = Arrays.stream(allAuthorities)
+                .filter(authority -> authority.contains("ADMIN"))
+                .toList().toArray(new String[0]);
+
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/user/resetPassword").permitAll()
-                        .requestMatchers("/api/user/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/api/user/update/").hasAnyAuthority(allAuthorities)
+                        .requestMatchers("/api/user/**").hasAnyAuthority(adminAuthorities)
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
