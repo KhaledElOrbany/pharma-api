@@ -1,7 +1,5 @@
 package eg.pharma.api.base;
 
-import eg.pharma.api.features.user.User;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.WebRequest;
 
