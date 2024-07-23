@@ -10,7 +10,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -52,11 +51,11 @@ public class UserService {
         user = userRepository.save(user);
 
         if (user.getEmail() != null) {
-            Mail mail = new Mail();
-            mail.setSubject("Welcome to Pharma!");
-            mail.setTo(new String[]{user.getEmail()});
-            mail.setBody("Your account has been created by Dr.Wagdy. Your username is: " + user.getUsername());
-            mailService.sendEmail(mail);
+            mailService.sendEmail(new Mail(
+                    new String[]{user.getEmail()},
+                    "Welcome to Pharma!",
+                    "Your account has been created by Dr.Wagdy. Your username is: " + user.getUsername())
+            );
         }
 
         return userMapper.toResource(user);
@@ -91,18 +90,19 @@ public class UserService {
 
     public String resetPassword(HashMap<String, String> params) {
         String email = params.get("email");
+        String message = "Please check your email!";
 
-        try {
-            Mail mail = new Mail();
-            mail.setBody("");
-            mail.setTo(new String[]{email});
-            mail.setSubject("");
-
-            mailService.sendEmail(mail);
-        } catch (Exception ex) {
-           throw new BusinessException("");
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return message;
         }
 
-        return "Email sent successfully!";
+        try {
+            mailService.sendEmail(new Mail(new String[]{email}, "", ""));
+        } catch (Exception ex) {
+            throw new BusinessException("");
+        }
+
+        return message;
     }
 }
