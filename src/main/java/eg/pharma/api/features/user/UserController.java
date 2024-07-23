@@ -46,7 +46,9 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/resetPassword")
-    public ResponseEntity<String> resetPassword(@RequestBody HashMap<String, String> requestBody) {
-        return ResponseEntity.ok(userService.resetPassword(requestBody));
+    public HashMap<String, Object> resetPassword(@RequestBody HashMap<String, String> requestBody) {
+        return respond(userService.resetPassword(requestBody), new HashMap<String, String>() {{
+            put("code", "200");
+        }});
     }
 }
