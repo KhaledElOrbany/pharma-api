@@ -45,27 +45,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        try {
+            String token = authHeader.substring(7);
+            String username = jwtService.extractUsername(token);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String token = authHeader.substring(7);
-        String username = jwtService.extractUsername(token);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (username != null && authentication == null) {
+                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 
-        if (username != null && authentication == null) {
-            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+                if (jwtService.isTokenValid(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
 
-            if (jwtService.isTokenValid(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
 
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
 
+                filterChain.doFilter(request, response);
             }
-
-            filterChain.doFilter(request, response);
+        } catch (Exception ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 }

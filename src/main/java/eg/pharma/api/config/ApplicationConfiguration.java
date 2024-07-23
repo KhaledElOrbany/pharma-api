@@ -1,6 +1,5 @@
 package eg.pharma.api.config;
 
-import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.user.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,10 +44,5 @@ public class ApplicationConfiguration {
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
-    }
-
-    @Bean
-    public BusinessException businessExceptionResolver() {
-        return new BusinessException();
     }
 }

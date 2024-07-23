@@ -1,6 +1,7 @@
 package eg.pharma.api.config;
 
 import eg.pharma.api.exception.CustomAccessDeniedHandler;
+import eg.pharma.api.exception.CustomExceptionHandlingFilter;
 import eg.pharma.api.features.role.RoleService;
 import eg.pharma.api.features.role.dto.RoleResource;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
@@ -26,19 +27,22 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomExceptionHandlingFilter customExceptionHandlingFilter;
 
     public SecurityConfig(
             RoleService roleService,
             UserDetailsServiceImpl userDetailsService,
             AuthenticationProvider authenticationProvider,
             JwtAuthenticationFilter jwtAuthenticationFilter,
-            CustomAccessDeniedHandler customAccessDeniedHandler
+            CustomAccessDeniedHandler customAccessDeniedHandler,
+            CustomExceptionHandlingFilter customExceptionHandlingFilter
     ) {
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customAccessDeniedHandler = customAccessDeniedHandler;
+        this.customExceptionHandlingFilter = customExceptionHandlingFilter;
     }
 
     @Bean
@@ -66,6 +70,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(customExceptionHandlingFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
