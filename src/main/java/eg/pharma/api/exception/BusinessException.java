@@ -1,6 +1,13 @@
 package eg.pharma.api.exception;
 
-public class BusinessException extends RuntimeException {
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+public class BusinessException extends RuntimeException implements HandlerExceptionResolver {
     private String errorCode;
 
     public BusinessException() {
@@ -19,6 +26,20 @@ public class BusinessException extends RuntimeException {
 
     public String getErrorCode() {
         return errorCode;
+    }
+
+    @Override
+    public ModelAndView resolveException(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Object object,
+            Exception exception
+    ) {
+        ModelAndView model = new ModelAndView();
+        model.setView(new MappingJackson2JsonView());
+        model.addObject("error", "An error has occurred, please contact us!");
+        model.setStatus(HttpStatusCode.valueOf(500));
+        return model;
     }
 }
 

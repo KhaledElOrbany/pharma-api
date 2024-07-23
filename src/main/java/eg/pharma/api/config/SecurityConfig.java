@@ -1,5 +1,6 @@
 package eg.pharma.api.config;
 
+import eg.pharma.api.exception.CustomAccessDeniedHandler;
 import eg.pharma.api.features.role.RoleService;
 import eg.pharma.api.features.role.dto.RoleResource;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
@@ -24,16 +25,20 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     public SecurityConfig(
             RoleService roleService,
             UserDetailsServiceImpl userDetailsService,
             AuthenticationProvider authenticationProvider,
-            JwtAuthenticationFilter jwtAuthenticationFilter) {
+            JwtAuthenticationFilter jwtAuthenticationFilter,
+            CustomAccessDeniedHandler customAccessDeniedHandler
+    ) {
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
     }
 
     @Bean
@@ -53,6 +58,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/update/").hasAnyAuthority(allAuthorities)
                         .requestMatchers("/api/user/**").hasAnyAuthority(adminAuthorities)
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(customAccessDeniedHandler)
                 )
                 .userDetailsService(userDetailsService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

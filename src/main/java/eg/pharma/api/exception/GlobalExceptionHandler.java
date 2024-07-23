@@ -15,10 +15,4 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getErrorCode());
         return new ResponseEntity<>(errorResponse, status);
     }
-
-    public record ErrorResponse(
-            String message,
-            String code
-    ) {
-    }
 }
