@@ -1,5 +1,6 @@
 package eg.pharma.api.features.user;
 
+import eg.pharma.api.base.BaseService;
 import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.user.dto.UserMapper;
 import eg.pharma.api.features.user.dto.UserRequest;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService extends BaseService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
