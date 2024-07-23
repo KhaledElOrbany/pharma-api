@@ -13,6 +13,12 @@ public class Mail {
     public Mail() {
     }
 
+    public Mail(String[] to, String subject, String body) {
+        this.to = to;
+        this.subject = subject;
+        this.body = body;
+    }
+
     public String[] getTo() {
         return to;
     }
