@@ -1,5 +1,6 @@
 package eg.pharma.api.features.user;
 
+import eg.pharma.api.enums.Gender;
 import eg.pharma.api.features.role.Role;
 import eg.pharma.api.features.audit.Audit;
 import jakarta.persistence.*;
@@ -43,6 +44,9 @@ public class User extends Audit implements UserDetails {
             length = 11
     )
     private String phone;
+
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
 
     private Boolean isDeleted = Boolean.FALSE;
 
@@ -144,19 +148,27 @@ public class User extends Audit implements UserDetails {
         this.phone = phone;
     }
 
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-    }
-
     public Role getRole() {
         return this.role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }
