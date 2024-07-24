@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 
-public class ApiResponse extends ResponseEntity<HashMap<String, Object>> {
+public class ApiResponse extends ResponseEntity<HashMap<?, ?>> {
 
     public ApiResponse(HashMap<String, Object> body, HttpStatus status) {
         super(body, status);

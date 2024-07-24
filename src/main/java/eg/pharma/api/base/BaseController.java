@@ -1,14 +1,9 @@
 package eg.pharma.api.base;
 
-import eg.pharma.api.exception.ErrorResponse;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class BaseController {
@@ -21,16 +16,14 @@ public class BaseController {
     }
 
     protected <T> ApiResponse respond(T data) {
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("data", data);
-        response.put("meta", new HashMap<>());
-        return new ApiResponse(response, HttpStatus.OK);
+        return ApiResponse.respond(data, HttpStatus.OK);
     }
 
     protected <T, M> ApiResponse respond(T data, M meta) {
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("data", data);
-        response.put("meta", meta);
-        return new ApiResponse(response, HttpStatus.OK);
+        return ApiResponse.respond(data, meta, HttpStatus.OK);
     }
+
+//    protected ResponseEntity<ErrorResponse> respond(ErrorResponse errorResponse, HttpStatus status) {
+//        return new ApiResponse<>(errorResponse, status);
+//    }
 }
