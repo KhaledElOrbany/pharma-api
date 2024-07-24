@@ -3,7 +3,10 @@ package eg.pharma.api.helpers.filters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eg.pharma.api.exception.ErrorResponse;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
+import eg.pharma.api.features.user.UserService;
 import eg.pharma.api.helpers.services.JwtService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final Log logger = LogFactory.getLog(UserService.class);
 
     public JwtAuthenticationFilter(
             JwtService jwtService,
@@ -70,11 +74,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             ObjectMapper objectMapper = new ObjectMapper();
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("application/json");
             HashMap<?, ?> data = new HashMap<>() {{
-                put("error", ex.getMessage());
+                put("error", "An error has occurred!");
             }};
             HashMap<?, ?> meta = new HashMap<>() {{
                 put("code", HttpServletResponse.SC_BAD_REQUEST);
