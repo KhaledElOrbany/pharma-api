@@ -1,6 +1,7 @@
 package eg.pharma.api.helpers.filters;
 
-import eg.pharma.api.exception.BusinessException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import eg.pharma.api.exception.ErrorResponse;
 import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.helpers.services.JwtService;
 import org.springframework.lang.NonNull;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -68,7 +70,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         } catch (Exception ex) {
-            throw new BusinessException(ex.getMessage());
+            ObjectMapper objectMapper = new ObjectMapper();
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+            HashMap<?, ?> data = new HashMap<>() {{
+                put("error", ex.getMessage());
+            }};
+            HashMap<?, ?> meta = new HashMap<>() {{
+                put("code", HttpServletResponse.SC_BAD_REQUEST);
+            }};
+            response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
         }
     }
 }
