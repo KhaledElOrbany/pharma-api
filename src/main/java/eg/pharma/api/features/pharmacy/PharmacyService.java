@@ -1,9 +1,10 @@
 package eg.pharma.api.features.pharmacy;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.pharmacy.dto.PharmacyMapper;
 import eg.pharma.api.features.pharmacy.dto.PharmacyRequest;
 import eg.pharma.api.features.pharmacy.dto.PharmacyResource;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class PharmacyService {
 
     public PharmacyResource getPharmacyById(Long id) {
         Pharmacy pharmacy = pharmacyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Pharmacy not found"));
+                .orElseThrow(() -> new BusinessException("Pharmacy not found", HttpStatus.NOT_FOUND));
         return pharmacyMapper.toResource(pharmacy);
     }
 
@@ -38,7 +39,7 @@ public class PharmacyService {
 
     public PharmacyResource updatePharmacy(Long id, PharmacyRequest pharmacyRequest) {
         Pharmacy pharmacy = pharmacyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Pharmacy not found"));
+                .orElseThrow(() -> new BusinessException("Pharmacy not found", HttpStatus.NOT_FOUND));
         pharmacy = pharmacyMapper.updateEntity(pharmacy, pharmacyRequest);
         pharmacy = pharmacyRepository.save(pharmacy);
         return pharmacyMapper.toResource(pharmacy);

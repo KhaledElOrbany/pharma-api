@@ -36,7 +36,8 @@ public class PharmacyController extends BaseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletePharmacy(@PathVariable("id") Long id) {
+    public ApiResponse deletePharmacy(@PathVariable("id") Long id) {
         pharmacyService.deletePharmacy(id);
+        return respond();
     }
 }

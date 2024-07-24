@@ -1,9 +1,10 @@
 package eg.pharma.api.features.medicine;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.medicine.dto.MedicineMapper;
 import eg.pharma.api.features.medicine.dto.MedicineRequest;
 import eg.pharma.api.features.medicine.dto.MedicineResource;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class MedicineService {
     public Medicine findMedicineById(Long id) {
         Medicine medicine = medicineRepository.findByIdAndIsDeleted(id, false);
         if (medicine == null) {
-            throw new EntityNotFoundException("Medicine not found");
+            throw new BusinessException("Medicine not found", HttpStatus.NOT_FOUND);
         }
         return medicine;
     }

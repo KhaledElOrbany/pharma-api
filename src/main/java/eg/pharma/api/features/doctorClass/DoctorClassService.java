@@ -1,9 +1,10 @@
 package eg.pharma.api.features.doctorClass;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.doctorClass.dto.DoctorClassMapper;
 import eg.pharma.api.features.doctorClass.dto.DoctorClassRequest;
 import eg.pharma.api.features.doctorClass.dto.DoctorClassResource;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class DoctorClassService {
     public DoctorClass findDoctorClassById(Long id) {
         DoctorClass doctorClass = doctorClassRepository.findByIdAndIsDeleted(id, false);
         if (doctorClass == null) {
-            throw new EntityNotFoundException("Doctor class not found");
+            throw new BusinessException("Doctor class not found", HttpStatus.NOT_FOUND);
         }
         return doctorClass;
     }

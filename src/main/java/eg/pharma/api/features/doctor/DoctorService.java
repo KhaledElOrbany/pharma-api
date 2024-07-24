@@ -1,11 +1,12 @@
 package eg.pharma.api.features.doctor;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.doctor.dto.DoctorMapper;
 import eg.pharma.api.features.doctorClass.DoctorClass;
 import eg.pharma.api.features.doctorClass.DoctorClassService;
 import eg.pharma.api.features.doctor.dto.DoctorRequest;
 import eg.pharma.api.features.doctor.dto.DoctorResource;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class DoctorService {
     }
 
     private Doctor findDoctorById(Long id) {
-        return doctorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+        return doctorRepository.findById(id).orElseThrow(() -> new BusinessException("Doctor not found", HttpStatus.NOT_FOUND));
     }
 
     public DoctorResource getDoctorById(Long id) {
