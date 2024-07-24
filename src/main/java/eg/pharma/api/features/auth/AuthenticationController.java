@@ -1,13 +1,13 @@
 package eg.pharma.api.features.auth;
 
-import eg.pharma.api.features.auth.dto.AuthenticationResponse;
+import eg.pharma.api.base.ApiResponse;
+import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.auth.dto.LoginRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthenticationController {
+public class AuthenticationController extends BaseController {
 
     private final AuthenticationService authenticationService;
 
@@ -16,7 +16,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ApiResponse login(@RequestBody LoginRequest request) {
+        return respond(authenticationService.authenticate(request));
     }
 }

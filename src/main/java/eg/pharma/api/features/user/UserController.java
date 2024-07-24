@@ -1,5 +1,6 @@
 package eg.pharma.api.features.user;
 
+import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
@@ -46,9 +47,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/resetPassword")
-    public HashMap<String, Object> resetPassword(@RequestBody HashMap<String, String> requestBody) {
-        return respond(userService.resetPassword(requestBody), new HashMap<String, String>() {{
-            put("code", "200");
-        }});
+    public ApiResponse resetPassword(@RequestBody HashMap<String, String> requestBody) {
+        return respond(userService.resetPassword(requestBody));
     }
 }
