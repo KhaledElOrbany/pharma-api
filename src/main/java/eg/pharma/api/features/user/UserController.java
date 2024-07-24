@@ -3,7 +3,6 @@ package eg.pharma.api.features.user;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.user.dto.UserRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -39,9 +38,9 @@ public class UserController extends BaseController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+    public ApiResponse deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok().build();
+        return respond();
     }
 
     @PostMapping("/resetPassword")

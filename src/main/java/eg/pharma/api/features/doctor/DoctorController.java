@@ -3,11 +3,7 @@ package eg.pharma.api.features.doctor;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.doctor.dto.DoctorRequest;
-import eg.pharma.api.features.doctor.dto.DoctorResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/doctor")
@@ -40,9 +36,9 @@ public class DoctorController extends BaseController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable("id") Long id) {
+    public ApiResponse deleteDoctor(@PathVariable("id") Long id) {
         doctorService.deleteDoctor(id);
-        return ResponseEntity.ok().build();
+        return respond();
     }
 
     @PutMapping(path = "/{id}/assignClass/{classId}")

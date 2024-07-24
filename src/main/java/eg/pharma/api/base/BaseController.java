@@ -15,6 +15,10 @@ public class BaseController {
         this.params = webRequest.getParameterMap();
     }
 
+    protected ApiResponse respond() {
+        return ApiResponse.respond(HttpStatus.OK);
+    }
+
     protected <T> ApiResponse respond(T data) {
         return ApiResponse.respond(data, HttpStatus.OK);
     }
@@ -22,8 +26,4 @@ public class BaseController {
     protected <T, M> ApiResponse respond(T data, M meta) {
         return ApiResponse.respond(data, meta, HttpStatus.OK);
     }
-
-//    protected ResponseEntity<ErrorResponse> respond(ErrorResponse errorResponse, HttpStatus status) {
-//        return new ApiResponse<>(errorResponse, status);
-//    }
 }

@@ -11,6 +11,10 @@ public class ApiResponse extends ResponseEntity<HashMap<?, ?>> {
         super(body, status);
     }
 
+    public static ApiResponse respond(HttpStatus status) {
+        return new ApiResponse(new HashMap<>(), status);
+    }
+
     public static <T> ApiResponse respond(T data, HttpStatus status) {
         HashMap<String, Object> response = new HashMap<>();
         response.put("data", data);

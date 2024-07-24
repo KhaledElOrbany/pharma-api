@@ -3,10 +3,7 @@ package eg.pharma.api.features.pharmacy;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.pharmacy.dto.PharmacyRequest;
-import eg.pharma.api.features.pharmacy.dto.PharmacyResource;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/pharmacies")
