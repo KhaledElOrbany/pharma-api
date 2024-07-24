@@ -1,5 +1,6 @@
 package eg.pharma.api.features.auth;
 
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.user.User;
 import eg.pharma.api.features.user.UserRepository;
 import eg.pharma.api.features.auth.dto.LoginRequest;
@@ -27,12 +28,16 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+        } catch (Exception ex) {
+            throw new BusinessException(ex.getMessage());
+        }
 
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.generateToken(user);
