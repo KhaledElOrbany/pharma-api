@@ -7,7 +7,7 @@ import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
 import eg.pharma.api.helpers.models.Mail;
 import eg.pharma.api.helpers.services.MailService;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,10 @@ public class UserService extends BaseService {
     public UserResource create(UserRequest request) {
         Optional<User> existingUser = userRepository.findByUsername(request.getUsername());
         if (existingUser.isPresent()) {
-            throw new BusinessException("User with username " + request.getUsername() + " already exists!", "409");
+            throw new BusinessException(
+                    "User with username " + request.getUsername() + " already exists!",
+                    HttpStatus.CONFLICT
+            );
         }
 
         User user = new User(
@@ -64,7 +67,7 @@ public class UserService extends BaseService {
 
     private User findUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new BusinessException("User not found", HttpStatus.NOT_FOUND));
     }
 
     public UserResource getUserById(Long id) {
