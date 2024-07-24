@@ -1,5 +1,6 @@
 package eg.pharma.api.features.pharmacy;
 
+import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.pharmacy.dto.PharmacyRequest;
 import eg.pharma.api.features.pharmacy.dto.PharmacyResource;
@@ -18,23 +19,23 @@ public class PharmacyController extends BaseController {
     }
 
     @GetMapping(path = "/{id}")
-    public PharmacyResource getPharmacyById(@PathVariable("id") Long id) {
-        return pharmacyService.getPharmacyById(id);
+    public ApiResponse getPharmacyById(@PathVariable("id") Long id) {
+        return respond(pharmacyService.getPharmacyById(id));
     }
 
     @GetMapping("/list")
-    public List<PharmacyResource> getAllPharmacies() {
-        return pharmacyService.getAllPharmacies();
+    public ApiResponse getAllPharmacies() {
+        return respond(pharmacyService.getAllPharmacies());
     }
 
     @PostMapping
-    public PharmacyResource createPharmacy(PharmacyRequest pharmacyRequest) {
-        return pharmacyService.createPharmacy(pharmacyRequest);
+    public ApiResponse createPharmacy(PharmacyRequest pharmacyRequest) {
+        return respond(pharmacyService.createPharmacy(pharmacyRequest));
     }
 
     @PutMapping("/{id}")
-    public PharmacyResource updatePharmacy(@PathVariable("id") Long id, PharmacyRequest pharmacyRequest) {
-        return pharmacyService.updatePharmacy(id, pharmacyRequest);
+    public ApiResponse updatePharmacy(@PathVariable("id") Long id, PharmacyRequest pharmacyRequest) {
+        return respond(pharmacyService.updatePharmacy(id, pharmacyRequest));
     }
 
     @DeleteMapping("/{id}")

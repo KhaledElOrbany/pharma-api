@@ -1,5 +1,6 @@
 package eg.pharma.api.features.doctor;
 
+import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.doctor.dto.DoctorRequest;
 import eg.pharma.api.features.doctor.dto.DoctorResource;
@@ -19,23 +20,23 @@ public class DoctorController extends BaseController {
     }
 
     @GetMapping(path = "/{id}")
-    public DoctorResource getDoctorById(@PathVariable("id") Long id) {
-        return doctorService.getDoctorById(id);
+    public ApiResponse getDoctorById(@PathVariable("id") Long id) {
+        return respond(doctorService.getDoctorById(id));
     }
 
     @GetMapping(path = "/list")
-    public List<DoctorResource> getAllDoctors() {
-        return doctorService.getAllDoctors();
+    public ApiResponse getAllDoctors() {
+        return respond(doctorService.getAllDoctors());
     }
 
     @PostMapping
-    public DoctorResource createDoctor(@RequestBody DoctorRequest doctorRequest) {
-        return doctorService.createDoctor(doctorRequest);
+    public ApiResponse createDoctor(@RequestBody DoctorRequest doctorRequest) {
+        return respond(doctorService.createDoctor(doctorRequest));
     }
 
     @PutMapping(path = "/{id}")
-    public DoctorResource updateDoctor(@PathVariable("id") Long id, @RequestBody DoctorRequest doctorRequest) {
-        return doctorService.updateDoctor(id, doctorRequest);
+    public ApiResponse updateDoctor(@PathVariable("id") Long id, @RequestBody DoctorRequest doctorRequest) {
+        return respond(doctorService.updateDoctor(id, doctorRequest));
     }
 
     @DeleteMapping(path = "/{id}")
@@ -45,12 +46,12 @@ public class DoctorController extends BaseController {
     }
 
     @PutMapping(path = "/{id}/assignClass/{classId}")
-    public DoctorResource assignClass(@PathVariable("id") Long id, @PathVariable("classId") Long classId) {
-        return doctorService.assignClass(id, classId);
+    public ApiResponse assignClass(@PathVariable("id") Long id, @PathVariable("classId") Long classId) {
+        return respond(doctorService.assignClass(id, classId));
     }
 
     @GetMapping(path = "/listByClass/{classId}")
-    public List<DoctorResource> getDoctorsByClass(@PathVariable("classId") Long classId) {
-        return doctorService.getDoctorsByClass(classId);
+    public ApiResponse getDoctorsByClass(@PathVariable("classId") Long classId) {
+        return respond(doctorService.getDoctorsByClass(classId));
     }
 }

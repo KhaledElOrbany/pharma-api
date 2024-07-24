@@ -1,12 +1,10 @@
 package eg.pharma.api.features.doctorClass;
 
+import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.doctorClass.dto.DoctorClassRequest;
-import eg.pharma.api.features.doctorClass.dto.DoctorClassResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctorClass")
@@ -19,24 +17,24 @@ public class DoctorClassController extends BaseController {
     }
 
     @GetMapping(path = "/{id}")
-    public DoctorClassResource getDoctorClassById(@PathVariable("id") Long id) {
-        return doctorClassService.getDoctorClassById(id);
+    public ApiResponse getDoctorClassById(@PathVariable("id") Long id) {
+        return respond(doctorClassService.getDoctorClassById(id));
     }
 
     @GetMapping(path = "/list")
-    public List<DoctorClassResource> getAllDoctorClasses() {
-        return doctorClassService.getAllDoctorClasses();
+    public ApiResponse getAllDoctorClasses() {
+        return respond(doctorClassService.getAllDoctorClasses());
     }
 
 
     @PostMapping
-    public DoctorClassResource createDoctorClass(@RequestBody DoctorClassRequest doctorRequest) {
-        return doctorClassService.createDoctorClass(doctorRequest);
+    public ApiResponse createDoctorClass(@RequestBody DoctorClassRequest doctorRequest) {
+        return respond(doctorClassService.createDoctorClass(doctorRequest));
     }
 
     @PutMapping(path = "/{id}")
-    public DoctorClassResource updateDoctorClass(@PathVariable("id") Long id, @RequestBody DoctorClassRequest doctorRequest) {
-        return doctorClassService.updateDoctorClass(id, doctorRequest);
+    public ApiResponse updateDoctorClass(@PathVariable("id") Long id, @RequestBody DoctorClassRequest doctorRequest) {
+        return respond(doctorClassService.updateDoctorClass(id, doctorRequest));
     }
 
     @DeleteMapping(path = "/{id}")

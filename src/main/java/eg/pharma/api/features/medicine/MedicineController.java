@@ -1,11 +1,9 @@
 package eg.pharma.api.features.medicine;
 
+import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.medicine.dto.MedicineRequest;
-import eg.pharma.api.features.medicine.dto.MedicineResource;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/medicine")
@@ -18,23 +16,23 @@ public class MedicineController extends BaseController {
     }
 
     @GetMapping("/{id}")
-    public MedicineResource getMedicineById(@PathVariable("id") Long id) {
-        return medicineService.getMedicineById(id);
+    public ApiResponse getMedicineById(@PathVariable("id") Long id) {
+        return respond(medicineService.getMedicineById(id));
     }
 
     @GetMapping("/list")
-    public List<MedicineResource> getAllMedicines() {
-        return medicineService.getAllMedicines();
+    public ApiResponse getAllMedicines() {
+        return respond(medicineService.getAllMedicines());
     }
 
     @PostMapping
-    public MedicineResource createMedicine(@RequestBody MedicineRequest medicineRequest) {
-        return medicineService.createMedicine(medicineRequest);
+    public ApiResponse createMedicine(@RequestBody MedicineRequest medicineRequest) {
+        return respond(medicineService.createMedicine(medicineRequest));
     }
 
     @PutMapping("/{id}")
-    public MedicineResource updateMedicine(@PathVariable("id") Long id, @RequestBody MedicineRequest medicineRequest) {
-        return medicineService.updateMedicine(id, medicineRequest);
+    public ApiResponse updateMedicine(@PathVariable("id") Long id, @RequestBody MedicineRequest medicineRequest) {
+        return respond(medicineService.updateMedicine(id, medicineRequest));
     }
 
     @DeleteMapping("/{id}")

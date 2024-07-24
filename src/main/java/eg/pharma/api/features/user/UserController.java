@@ -3,12 +3,10 @@ package eg.pharma.api.features.user;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.user.dto.UserRequest;
-import eg.pharma.api.features.user.dto.UserResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -21,23 +19,23 @@ public class UserController extends BaseController {
     }
 
     @GetMapping(path = "/{id}")
-    public UserResource getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+    public ApiResponse getUserById(@PathVariable("id") Long id) {
+        return respond(userService.getUserById(id));
     }
 
     @GetMapping("/list")
-    public List<UserResource> getAllUsers() {
-        return userService.getAllUsers();
+    public ApiResponse getAllUsers() {
+        return respond(userService.getAllUsers());
     }
 
     @PostMapping("/create")
-    public UserResource create(@RequestBody UserRequest request) {
-        return userService.create(request);
+    public ApiResponse create(@RequestBody UserRequest request) {
+        return respond(userService.create(request));
     }
 
     @PutMapping(path = "update/{id}")
-    public UserResource updateUser(@PathVariable("id") Long id, @RequestBody UserRequest userRequest) {
-        return userService.updateUser(id, userRequest);
+    public ApiResponse updateUser(@PathVariable("id") Long id, @RequestBody UserRequest userRequest) {
+        return respond(userService.updateUser(id, userRequest));
     }
 
     @DeleteMapping(path = "/{id}")
