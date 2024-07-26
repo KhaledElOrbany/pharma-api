@@ -78,10 +78,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             ObjectMapper objectMapper = new ObjectMapper();
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("application/json");
-            HashMap<?, ?> data = new HashMap<>() {{
+            HashMap<String, Object> data = new HashMap<>() {{
                 put("error", "An error has occurred!");
             }};
-            HashMap<?, ?> meta = new HashMap<>() {{
+            HashMap<String, Object> meta = new HashMap<>() {{
                 put("code", HttpServletResponse.SC_BAD_REQUEST);
             }};
             response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
