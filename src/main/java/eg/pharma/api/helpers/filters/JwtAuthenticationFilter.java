@@ -2,10 +2,7 @@ package eg.pharma.api.helpers.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eg.pharma.api.exception.ErrorResponse;
-import eg.pharma.api.features.user.UserService;
 import eg.pharma.api.helpers.services.JwtService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,7 +25,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private final Log logger = LogFactory.getLog(UserService.class);
 
     public JwtAuthenticationFilter(
             JwtService jwtService,
@@ -74,17 +70,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            ObjectMapper objectMapper = new ObjectMapper();
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.setContentType("application/json");
-            HashMap<String, Object> data = new HashMap<>() {{
-                put("error", "An error has occurred!");
-            }};
-            HashMap<String, Object> meta = new HashMap<>() {{
-                put("code", HttpServletResponse.SC_BAD_REQUEST);
-            }};
-            response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
+            handleError(response, ex);
         }
+    }
+
+    private void handleError(
+            @NonNull HttpServletResponse response,
+            @NonNull Exception ex
+    ) throws IOException {
+        int status;
+        String message;
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // TODO: utilize ex.getCause() for more detailed error handling
+        if (ex.getMessage().startsWith("JWT expired at")) {
+            message = "Token expired!";
+            status = HttpServletResponse.SC_FORBIDDEN;
+        } else {
+            message = "An error has occurred!";
+            status = HttpServletResponse.SC_BAD_REQUEST;
+        }
+
+        response.setStatus(status);
+        response.setContentType("application/json");
+        HashMap<String, Object> data = new HashMap<>() {{
+            put("error", message);
+        }};
+        HashMap<String, Object> meta = new HashMap<>() {{
+            put("code", status);
+        }};
+        response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
     }
 }
