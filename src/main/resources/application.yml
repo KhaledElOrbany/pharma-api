@@ -9,17 +9,25 @@ spring:
     url: jdbc:postgresql://localhost:5432/pharma
     username: el3orb
     password: Pa$$w0rd!
+    hikari:
+      schema: pharma
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+      ddl-auto: none
     show-sql: false
     database: postgresql
     properties:
       hibernate:
         format_sql: true
+
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/pharma
+    user: el3orb
+    password: Pa$$w0rd!
+    schemas: pharma
+    locations: classpath:db/migration/postgresql
 
   config:
     import: optional:secrets.yml
