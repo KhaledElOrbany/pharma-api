@@ -13,6 +13,8 @@ import java.util.Date;
 @Service
 public class MailService {
 
+    @Value("${spring.application.name}")
+    private String appName;
     @Value("${spring.mail.username}")
     private String senderUsername;
 
@@ -24,8 +26,7 @@ public class MailService {
 
     public void sendEmail(@NonNull Mail mail) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("Pharma");
-        message.setFrom(String.format("%s <%s>", "Pharma", this.senderUsername));
+        message.setFrom(String.format("%s <%s>", this.appName, this.senderUsername));
         message.setText(mail.getBody());
         message.setSubject(mail.getSubject());
         message.setTo(mail.getTo());
