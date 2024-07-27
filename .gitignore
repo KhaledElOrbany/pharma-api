@@ -36,6 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+### Secrets for mail & JWT ###
 secrets.yml
 
+### Test users for debug ###
 /src/main/resources/db/migration/postgresql/v2*
