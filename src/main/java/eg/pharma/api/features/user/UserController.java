@@ -6,6 +6,7 @@ import eg.pharma.api.features.user.dto.UserRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,9 +23,12 @@ public class UserController extends BaseController {
         return respond(userService.getUserById(id));
     }
 
-    @GetMapping("/list")
+    @GetMapping(path = "/list")
     public ApiResponse getAllUsers() {
-        return respond(userService.getAllUsers());
+        List<?> data = userService.getAllUsers();
+        return respond(data, new HashMap<>() {{
+            put("total", data.size());
+        }});
     }
 
     @PostMapping("/create")

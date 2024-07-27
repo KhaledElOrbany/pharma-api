@@ -5,6 +5,9 @@ import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.doctorClass.dto.DoctorClassRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/doctorClass")
 public class DoctorClassController extends BaseController {
@@ -22,7 +25,10 @@ public class DoctorClassController extends BaseController {
 
     @GetMapping(path = "/list")
     public ApiResponse getAllDoctorClasses() {
-        return respond(doctorClassService.getAllDoctorClasses());
+        List<?> data = doctorClassService.getAllDoctorClasses();
+        return respond(data, new HashMap<>() {{
+            put("total", data.size());
+        }});
     }
 
 
