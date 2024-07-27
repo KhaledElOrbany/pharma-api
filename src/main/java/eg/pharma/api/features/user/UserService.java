@@ -55,10 +55,11 @@ public class UserService extends BaseService {
         user = userRepository.save(user);
 
         if (user.getEmail() != null) {
+            String creator = user.getCreatedBy().getFirstName() + " " + user.getCreatedBy().getLastName();
             mailService.sendEmail(new Mail(
                     new String[]{user.getEmail()},
                     "Welcome to Pharma!",
-                    "Your account has been created by Dr.Wagdy. Your username is: " + user.getUsername())
+                    "Your account has been created by " + creator + ". Your username is: " + user.getUsername())
             );
         }
 

@@ -24,7 +24,8 @@ public class MailService {
 
     public void sendEmail(@NonNull Mail mail) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(this.senderUsername);
+        message.setFrom("Pharma");
+        message.setFrom(String.format("%s <%s>", "Pharma", this.senderUsername));
         message.setText(mail.getBody());
         message.setSubject(mail.getSubject());
         message.setTo(mail.getTo());
