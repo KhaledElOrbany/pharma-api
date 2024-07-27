@@ -43,6 +43,6 @@ public class AuthenticationService {
         String token = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user, token);
 
-        return new AuthenticationResponse(token, jwtService.getExpirationTime(), refreshToken, jwtService.getExpirationTime());
+        return new AuthenticationResponse(token, jwtService.getExpirationTime());
     }
 }
