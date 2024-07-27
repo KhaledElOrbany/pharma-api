@@ -47,9 +47,9 @@ public class UserService extends BaseService {
                 request.getUsername(),
                 request.getFirstName(),
                 request.getLastName(),
-                request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
-                request.getPhone()
+                request.getPhone(),
+                request.getEmail()
         );
         user.setRole(request.getRole());
         user = userRepository.save(user);

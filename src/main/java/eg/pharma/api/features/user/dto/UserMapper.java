@@ -27,10 +27,11 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
         return new UserResource(
                 user.getId(),
                 user.getUsername(),
-                user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPhone(),
+                user.getEmail(),
+                user.getGender(),
                 roleMapper.toResource(user.getRole())
         );
     }
@@ -41,9 +42,9 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
                 request.getUsername(),
                 request.getFirstName(),
                 request.getLastName(),
-                request.getEmail(),
                 request.getPassword(),
-                request.getPhone()
+                request.getPhone(),
+                request.getEmail()
         );
     }
 
@@ -54,6 +55,7 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
         user.setPhone(request.getPhone());
+        user.setGender(request.getGender());
         return user;
     }
 }
