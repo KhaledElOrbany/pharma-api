@@ -427,6 +427,6 @@ VALUES (1, '15 مايو', '15 May', now(), now()),
 
 insert into "role" (name, description, is_deleted) values ('SUPER_ADMIN', 'super-admin', false), ('ADMIN', 'admin', false), ('USER', 'user', false);
 
-INSERT INTO "user"
-(created_at, updated_at, email, first_name, is_deleted, last_name, "password", phone, role_id, username, created_by_id, updated_by_id)
-VALUES(now(), now(), 'super@pharma.com', 'super', false, 'admin', '$2a$10$QmBS9.yufa0QB1A7QbLDP.CTMp7SH4KGj87K/zWIgJcZsbIYyyB1S', '01554102081', 1, 'super_admin', NULL, NULL);
+INSERT INTO pharma."user"
+(id, username, first_name, last_name, gender, email, "password", phone, role_id, is_deleted, created_at, updated_at, created_by_id, updated_by_id)
+VALUES(1, 'super_admin', 'super', 'admin', 'MALE', 'super@pharma.com', '$2a$10$QmBS9.yufa0QB1A7QbLDP.CTMp7SH4KGj87K/zWIgJcZsbIYyyB1S', '01554102081', 1, false, now(), now(), NULL, NULL);
