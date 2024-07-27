@@ -2,7 +2,6 @@ package eg.pharma.api.helpers.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eg.pharma.api.exception.ErrorResponse;
-import eg.pharma.api.features.user.UserDetailsServiceImpl;
 import eg.pharma.api.features.user.UserService;
 import eg.pharma.api.helpers.services.JwtService;
 import org.apache.commons.logging.Log;
@@ -16,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,15 +27,15 @@ import java.util.HashMap;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final UserDetailsService userDetailsService;
     private final Log logger = LogFactory.getLog(UserService.class);
 
     public JwtAuthenticationFilter(
             JwtService jwtService,
-            UserDetailsServiceImpl userDetailsServiceImpl
+            UserDetailsService userDetailsService
     ) {
         this.jwtService = jwtService;
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             if (username != null && authentication == null) {
-                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 if (jwtService.isTokenValid(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
