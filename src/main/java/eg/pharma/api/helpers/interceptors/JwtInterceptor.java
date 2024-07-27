@@ -5,6 +5,7 @@ import eg.pharma.api.helpers.utils.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseCookie;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,12 +20,21 @@ public class JwtInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
+    public boolean preHandle(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull Object object
+    ) {
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView model) {
+    public void postHandle(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull Object object,
+            ModelAndView model
+    ) {
         String refreshToken = jwtService.generateRefreshToken(SecurityUtil.getCurrentUser());
         if (!refreshToken.isEmpty() || !refreshToken.isBlank()) {
             ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
@@ -38,6 +48,11 @@ public class JwtInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) {
+    public void afterCompletion(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull Object object,
+            Exception exception
+    ) {
     }
 }
