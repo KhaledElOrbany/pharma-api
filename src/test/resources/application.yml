@@ -13,8 +13,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
     show-sql: false
     database: h2
     properties:

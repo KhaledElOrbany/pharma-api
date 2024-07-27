@@ -1,4 +1,33 @@
-INSERT INTO public.city (governorate_id, name_ar, name_en, created_at, updated_at)
+INSERT INTO governorate (id, name_ar, name_en, created_at, updated_at)
+VALUES (1, 'القاهرة', 'Cairo', NOW(), NOW()),
+       (2, 'الجيزة', 'Giza', NOW(), NOW()),
+       (3, 'الأسكندرية', 'Alexandria', NOW(), NOW()),
+       (4, 'الدقهلية', 'Dakahlia', NOW(), NOW()),
+       (5, 'البحر الأحمر', 'Red Sea', NOW(), NOW()),
+       (6, 'البحيرة', 'Beheira', NOW(), NOW()),
+       (7, 'الفيوم', 'Fayoum', NOW(), NOW()),
+       (8, 'الغربية', 'Gharbiya', NOW(), NOW()),
+       (9, 'الإسماعلية', 'Ismailia', NOW(), NOW()),
+       (10, 'المنوفية', 'Menofia', NOW(), NOW()),
+       (11, 'المنيا', 'Minya', NOW(), NOW()),
+       (12, 'القليوبية', 'Qaliubiya', NOW(), NOW()),
+       (13, 'الوادي الجديد', 'New Valley', NOW(), NOW()),
+       (14, 'السويس', 'Suez', NOW(), NOW()),
+       (15, 'اسوان', 'Aswan', NOW(), NOW()),
+       (16, 'اسيوط', 'Assiut', NOW(), NOW()),
+       (17, 'بني سويف', 'Beni Suef', NOW(), NOW()),
+       (18, 'بورسعيد', 'Port Said', NOW(), NOW()),
+       (19, 'دمياط', 'Damietta', NOW(), NOW()),
+       (20, 'الشرقية', 'Sharkia', NOW(), NOW()),
+       (21, 'جنوب سيناء', 'South Sinai', NOW(), NOW()),
+       (22, 'كفر الشيخ', 'Kafr Al sheikh', NOW(), NOW()),
+       (23, 'مطروح', 'Matrouh', NOW(), NOW()),
+       (24, 'الأقصر', 'Luxor', NOW(), NOW()),
+       (25, 'قنا', 'Qena', NOW(), NOW()),
+       (26, 'شمال سيناء', 'North Sinai', NOW(), NOW()),
+       (27, 'سوهاج', 'Sohag', NOW(), NOW());
+
+INSERT INTO city (governorate_id, name_ar, name_en, created_at, updated_at)
 VALUES (1, '15 مايو', '15 May', now(), now()),
        (1, 'الازبكية', 'Al Azbakeyah', now(), now()),
        (1, 'البساتين', 'Al Basatin', now(), now()),
@@ -395,3 +424,9 @@ VALUES (1, '15 مايو', '15 May', now(), now()),
        (27, 'طما', 'Tama', now(), now()),
        (27, 'طهطا', 'Tahta', now(), now()),
        (27, 'الكوثر', 'Alkawthar', now(), now());
+
+insert into "role" (name, description, is_deleted) values ('SUPER_ADMIN', 'super-admin', false), ('ADMIN', 'admin', false), ('USER', 'user', false);
+
+INSERT INTO "user"
+(created_at, updated_at, email, first_name, is_deleted, last_name, "password", phone, role_id, username, created_by_id, updated_by_id)
+VALUES(now(), now(), 'super@pharma.com', 'super', false, 'admin', '$2a$10$QmBS9.yufa0QB1A7QbLDP.CTMp7SH4KGj87K/zWIgJcZsbIYyyB1S', '01554102081', 1, 'super_admin', NULL, NULL);
