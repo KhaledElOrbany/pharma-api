@@ -55,7 +55,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String refreshToken = jwtService.retrieveRefreshToken(request);
             try {
                 String username = jwtService.extractUsername(refreshToken);
-                authenticateUser(request, username, refreshToken);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                if (jwtService.isTokenValid(refreshToken, userDetails)) {
+                    setAuthentication(userDetails, request);
+                    String newToken = jwtService.generateToken(userDetails);
+                    response.setHeader("Authorization", "Bearer " + newToken);
+                }
             } catch (Exception e) {
                 handleError(response, e);
             }
