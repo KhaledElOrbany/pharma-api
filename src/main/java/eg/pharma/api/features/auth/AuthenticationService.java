@@ -47,8 +47,9 @@ public class AuthenticationService {
 
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false) //TODO
                 .path("/")
+                .sameSite("Strict")
                 .maxAge(jwtService.getRefreshTokenExpirationTime() / 1000)
                 .build();
         response.addHeader("Set-Cookie", cookie.toString());
