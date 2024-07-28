@@ -1,5 +1,6 @@
 package eg.pharma.api.helpers.interceptors;
 
+import eg.pharma.api.features.user.User;
 import eg.pharma.api.helpers.services.JwtService;
 import eg.pharma.api.helpers.utils.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,13 +36,18 @@ public class JwtInterceptor implements HandlerInterceptor {
             @NonNull Object object,
             ModelAndView model
     ) {
-        String refreshToken = jwtService.generateRefreshToken(SecurityUtil.getCurrentUser());
+        User currentUser = SecurityUtil.getCurrentUser();
+        if (currentUser == null) {
+            return;
+        }
+
+        String refreshToken = jwtService.generateRefreshToken(currentUser);
         if (!refreshToken.isEmpty() || !refreshToken.isBlank()) {
-            ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+            ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                     .httpOnly(true)
                     .secure(true)
                     .path("/")
-                    .maxAge(604800)
+                    .maxAge(jwtService.getExpirationTime())
                     .build();
             response.addHeader("Set-Cookie", cookie.toString());
         }
