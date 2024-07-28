@@ -37,19 +37,24 @@ public class JwtInterceptor implements HandlerInterceptor {
             ModelAndView model
     ) {
         User currentUser = SecurityUtil.getCurrentUser();
-        if (currentUser == null) {
-            return;
-        }
+        if (currentUser != null) {
+            String refreshToken = jwtService.retrieveRefreshToken(request);
 
-        String refreshToken = jwtService.generateRefreshToken(currentUser);
-        if (!refreshToken.isEmpty() || !refreshToken.isBlank()) {
-            ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                    .httpOnly(true)
-                    .secure(true)
-                    .path("/")
-                    .maxAge(jwtService.getRefreshTokenExpirationTime() / 1000)
-                    .build();
-            response.addHeader("Set-Cookie", cookie.toString());
+            try {
+                jwtService.isTokenValid(refreshToken, currentUser);
+            } catch (Exception ex) {
+                refreshToken = jwtService.generateRefreshToken(currentUser);
+            }
+
+            if (!refreshToken.isEmpty()) {
+                ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                        .httpOnly(true)
+                        .secure(true)
+                        .path("/")
+                        .maxAge(jwtService.getRefreshTokenExpirationTime() / 1000)
+                        .build();
+                response.addHeader("Set-Cookie", cookie.toString());
+            }
         }
     }
 
