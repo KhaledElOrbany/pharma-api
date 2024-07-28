@@ -1,18 +1,15 @@
 package eg.pharma.api.helpers.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.exception.ErrorResponse;
 import eg.pharma.api.helpers.services.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.http.Cookie;
-import org.springframework.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,9 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Optional;
 
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -52,40 +47,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        String token = authHeader.substring(7);
         try {
-            String token = authHeader.substring(7);
+            String username = jwtService.extractUsername(token);
+            authenticateUser(request, username, token);
+        } catch (ExpiredJwtException ex) {
             String refreshToken = jwtService.retrieveRefreshToken(request);
-            String username = extractUsername(request, token);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-            if (username != null && authentication == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                try {
-                    if (jwtService.isTokenValid(token, userDetails)) {
-                        setAuthentication(userDetails, request);
-                    }
-                } catch (Exception ex) {
-                    if (jwtService.isTokenValid(refreshToken, userDetails)) {
-                        setAuthentication(userDetails, request);
-                    }
-                }
-
-                filterChain.doFilter(request, response);
+            try {
+                String username = jwtService.extractUsername(refreshToken);
+                authenticateUser(request, username, refreshToken);
+            } catch (Exception e) {
+                handleError(response, e);
             }
         } catch (Exception ex) {
             handleError(response, ex);
         }
+
+        filterChain.doFilter(request, response);
     }
 
-    private String extractUsername(HttpServletRequest request, String token) {
-        try {
-            return jwtService.extractUsername(token);
-        } catch (ExpiredJwtException ex) {
-            String refreshToken = jwtService.retrieveRefreshToken(request);
-            return jwtService.extractUsername(refreshToken);
-        } catch (Exception ex) {
-            throw new BusinessException();
+    private void authenticateUser(HttpServletRequest request, String username, String token) {
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (jwtService.isTokenValid(token, userDetails)) {
+                setAuthentication(userDetails, request);
+            }
         }
     }
 
@@ -107,7 +93,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String message;
         ObjectMapper objectMapper = new ObjectMapper();
 
-        if (ex.getMessage().startsWith("JWT expired at")) {
+        if (ex instanceof ExpiredJwtException) {
             message = "Token expired!";
             status = HttpServletResponse.SC_FORBIDDEN;
         } else {
