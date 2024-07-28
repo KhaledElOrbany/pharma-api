@@ -20,16 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtService {
 
-    @Value("${security.jwt.secret-key}")
+    @Value("${security.jwt.secretKey}")
     private String secretKey;
 
-    @Value("${security.jwt.expiration-time}")
+    @Value("${security.jwt.expirationTime}")
     private long expirationTime;
 
-    @Value("${security.jwt.refresh-token-secret-key}")
-    private String refreshTokenSecretKey;
-
-    @Value("${security.jwt.refresh-token-expiration-time}")
+    @Value("${security.jwt.refreshTokenExpirationTime}")
     private long refreshTokenExpirationTime;
 
     public String extractUsername(String token) {
@@ -54,7 +51,7 @@ public class JwtService {
     }
 
     public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims, userDetails, this.refreshTokenSecretKey, this.refreshTokenExpirationTime);
+        return buildToken(extraClaims, userDetails, this.secretKey, this.refreshTokenExpirationTime);
     }
 
     public long getExpirationTime() {
