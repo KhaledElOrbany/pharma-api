@@ -61,6 +61,10 @@ public class JwtService {
         return expirationTime;
     }
 
+    public long getRefreshTokenExpirationTime() {
+        return refreshTokenExpirationTime;
+    }
+
     private String buildToken(
             Map<String, Object> extraClaims,
             @NonNull UserDetails userDetails,
