@@ -3,6 +3,7 @@ package eg.pharma.api.features.auth;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.auth.dto.LoginRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class AuthenticationController extends BaseController {
     }
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody LoginRequest request) {
-        return respond(authenticationService.authenticate(request));
+    public ApiResponse login(@RequestBody LoginRequest request, HttpServletResponse response) {
+        return respond(authenticationService.authenticate(request, response));
     }
 }

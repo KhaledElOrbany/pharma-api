@@ -6,6 +6,8 @@ import eg.pharma.api.features.user.UserRepository;
 import eg.pharma.api.features.auth.dto.LoginRequest;
 import eg.pharma.api.features.auth.dto.AuthenticationResponse;
 import eg.pharma.api.helpers.services.JwtService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse authenticate(LoginRequest request) {
+    public AuthenticationResponse authenticate(LoginRequest request, HttpServletResponse response) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -41,6 +43,15 @@ public class AuthenticationService {
 
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(jwtService.getRefreshTokenExpirationTime())
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
 
         return new AuthenticationResponse(token, jwtService.getExpirationTime());
     }
