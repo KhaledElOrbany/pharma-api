@@ -7,6 +7,9 @@ import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
 import eg.pharma.api.helpers.models.Mail;
 import eg.pharma.api.helpers.services.MailService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -76,9 +79,10 @@ public class UserService extends BaseService {
         return userMapper.toResource(user);
     }
 
-    public List<UserResource> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return userMapper.toResourceList(users);
+    public List<UserResource> getAllUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> users = userRepository.findAll(pageable);
+        return userMapper.toResourceList(users.getContent());
     }
 
     public UserResource updateUser(Long id, UserRequest userRequest) {

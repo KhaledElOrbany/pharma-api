@@ -8,11 +8,17 @@ import java.util.Map;
 
 public class BaseController {
 
+    protected int page = 0;
+    protected int size = 5;
     protected Map<String, String[]> params;
+
+    public BaseController() {
+    }
 
     @ModelAttribute
     protected void setWebRequest(WebRequest webRequest) {
         this.params = webRequest.getParameterMap();
+        preparePagination();
     }
 
     protected ApiResponse respond() {
@@ -25,5 +31,15 @@ public class BaseController {
 
     protected <T, M> ApiResponse respond(T data, M meta) {
         return ApiResponse.respond(data, meta, HttpStatus.OK);
+    }
+
+    protected void preparePagination() {
+        try {
+            this.page = Integer.parseInt(params.get("page")[0]);
+            this.size = Integer.parseInt(params.get("size")[0]);
+        } catch (Exception e) {
+            this.page = 0;
+            this.size = 5;
+        }
     }
 }
