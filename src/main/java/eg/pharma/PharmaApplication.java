@@ -1,5 +1,6 @@
 package eg.pharma;
 
+import eg.pharma.api.helpers.utils.EnvironmentUtil;
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ public class PharmaApplication {
                 .filter(StringUtils::isNotBlank)
                 .orElse("/");
         String hostAddress = "localhost";
+        EnvironmentUtil.setCurrent(env.getActiveProfiles()[0]);
         try {
             hostAddress = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
