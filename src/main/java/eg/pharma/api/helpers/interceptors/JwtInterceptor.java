@@ -2,6 +2,7 @@ package eg.pharma.api.helpers.interceptors;
 
 import eg.pharma.api.features.user.User;
 import eg.pharma.api.helpers.services.JwtService;
+import eg.pharma.api.helpers.utils.EnvironmentUtil;
 import eg.pharma.api.helpers.utils.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,15 +26,6 @@ public class JwtInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(
-            @NonNull HttpServletRequest request,
-            @NonNull HttpServletResponse response,
-            @NonNull Object object
-    ) {
-        return true;
-    }
-
-    @Override
     public void postHandle(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
@@ -54,7 +46,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (!refreshToken.isEmpty()) {
                 ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                         .httpOnly(true)
-                        .secure(false) //TODO
+                        .secure(EnvironmentUtil.isProduction())
                         .path("/")
                         .sameSite("Strict")
                         .maxAge(jwtService.getRefreshTokenExpirationTime() / 1000)
@@ -62,14 +54,5 @@ public class JwtInterceptor implements HandlerInterceptor {
                 response.addHeader("Set-Cookie", cookie.toString());
             }
         }
-    }
-
-    @Override
-    public void afterCompletion(
-            @NonNull HttpServletRequest request,
-            @NonNull HttpServletResponse response,
-            @NonNull Object object,
-            Exception exception
-    ) {
     }
 }
