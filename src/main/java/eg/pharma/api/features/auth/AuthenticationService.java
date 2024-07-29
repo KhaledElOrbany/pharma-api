@@ -6,6 +6,7 @@ import eg.pharma.api.features.user.UserRepository;
 import eg.pharma.api.features.auth.dto.LoginRequest;
 import eg.pharma.api.features.auth.dto.AuthenticationResponse;
 import eg.pharma.api.helpers.services.JwtService;
+import eg.pharma.api.helpers.utils.EnvironmentUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,7 +48,7 @@ public class AuthenticationService {
 
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(false) //TODO
+                .secure(EnvironmentUtil.isProduction())
                 .path("/")
                 .sameSite("Strict")
                 .maxAge(jwtService.getRefreshTokenExpirationTime() / 1000)
