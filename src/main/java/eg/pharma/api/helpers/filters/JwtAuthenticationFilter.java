@@ -68,7 +68,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             handleError(response, ex);
         }
 
-        filterChain.doFilter(request, response);
+        try {
+            filterChain.doFilter(request, response);
+        } catch (Exception ex) {
+            handleError(response, ex);
+        }
     }
 
     private void authenticateUser(HttpServletRequest request, String username, String token) {
@@ -100,7 +104,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (ex instanceof ExpiredJwtException) {
             message = "Token expired!";
-            status = HttpServletResponse.SC_FORBIDDEN;
+            status = HttpServletResponse.SC_UNAUTHORIZED;
         } else {
             message = "An error has occurred!";
             status = HttpServletResponse.SC_BAD_REQUEST;
