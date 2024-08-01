@@ -1,6 +1,7 @@
 package eg.pharma.api.features.user.dto;
 
 import eg.pharma.api.enums.Gender;
+import eg.pharma.api.features.address.city.City;
 import eg.pharma.api.features.role.Role;
 
 public class UserRequest {
@@ -12,6 +13,8 @@ public class UserRequest {
     private String email;
     private Gender gender;
     private Role role;
+    private String district;
+    private City city;
 
     public String getUsername() {
         return username;
@@ -43,5 +46,13 @@ public class UserRequest {
 
     public Role getRole() {
         return role;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public City getCity() {
+        return city;
     }
 }

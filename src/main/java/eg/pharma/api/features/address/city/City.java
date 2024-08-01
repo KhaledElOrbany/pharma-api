@@ -25,8 +25,7 @@ public class City extends Audit {
     public City() {
     }
 
-    public City(Long id, String nameAr, String nameEn) {
-        this.id = id;
+    public City(String nameAr, String nameEn) {
         this.nameAr = nameAr;
         this.nameEn = nameEn;
     }

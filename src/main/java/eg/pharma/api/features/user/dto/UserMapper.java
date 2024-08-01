@@ -1,5 +1,6 @@
 package eg.pharma.api.features.user.dto;
 
+import eg.pharma.api.features.address.city.dto.CityMapper;
 import eg.pharma.api.features.role.dto.RoleMapper;
 import eg.pharma.api.interfaces.IMapper;
 import eg.pharma.api.features.user.User;
@@ -11,9 +12,11 @@ import java.util.List;
 @Service
 public class UserMapper implements IMapper<User, UserResource, UserRequest> {
 
+    private final CityMapper cityMapper;
     private final RoleMapper roleMapper;
 
-    public UserMapper(@Lazy RoleMapper roleMapper) {
+    public UserMapper(@Lazy CityMapper cityMapper, @Lazy RoleMapper roleMapper) {
+        this.cityMapper = cityMapper;
         this.roleMapper = roleMapper;
     }
 
@@ -32,6 +35,8 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
                 user.getPhone(),
                 user.getEmail(),
                 user.getGender(),
+                user.getDistrict(),
+                cityMapper.toResource(user.getCity()),
                 roleMapper.toResource(user.getRole())
         );
     }
@@ -56,6 +61,8 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
         user.setPassword(request.getPassword());
         user.setPhone(request.getPhone());
         user.setGender(request.getGender());
+        user.setDistrict(request.getDistrict());
+        user.setCity(request.getCity());
         return user;
     }
 }

@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 public abstract class Audit {
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User createdBy;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User updatedBy;
 
     @Column(name = "created_at")

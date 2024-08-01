@@ -32,12 +32,11 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(LoginRequest request, HttpServletResponse response) {
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getUsername(),
-                            request.getPassword()
-                    )
+            var login = new UsernamePasswordAuthenticationToken(
+                    request.getUsername(),
+                    request.getPassword()
             );
+            authenticationManager.authenticate(login);
         } catch (Exception ex) {
             throw new BusinessException(ex.getMessage());
         }

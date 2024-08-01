@@ -29,8 +29,7 @@ public class Governorate extends Audit {
     public Governorate() {
     }
 
-    public Governorate(Long id, String nameAr, String nameEn) {
-        this.id = id;
+    public Governorate(String nameAr, String nameEn) {
         this.nameAr = nameAr;
         this.nameEn = nameEn;
     }

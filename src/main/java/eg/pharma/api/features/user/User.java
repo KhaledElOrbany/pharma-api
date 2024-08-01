@@ -1,6 +1,7 @@
 package eg.pharma.api.features.user;
 
 import eg.pharma.api.enums.Gender;
+import eg.pharma.api.features.address.city.City;
 import eg.pharma.api.features.role.Role;
 import eg.pharma.api.features.audit.Audit;
 import jakarta.persistence.*;
@@ -53,6 +54,12 @@ public class User extends Audit implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
+
+    private String district;
+
+    @OneToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
+    private City city;
 
     public User() {
     }
@@ -162,6 +169,22 @@ public class User extends Audit implements UserDetails {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public Boolean getDeleted() {
