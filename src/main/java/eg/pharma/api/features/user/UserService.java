@@ -7,6 +7,7 @@ import eg.pharma.api.features.user.dto.UserRequest;
 import eg.pharma.api.features.user.dto.UserResource;
 import eg.pharma.api.helpers.models.Mail;
 import eg.pharma.api.helpers.services.MailService;
+import eg.pharma.api.helpers.utils.SecurityUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -67,6 +69,11 @@ public class UserService extends BaseService {
         }
 
         return userMapper.toResource(user);
+    }
+
+    public UserResource getCurrentUser() {
+        User currentUser = Objects.requireNonNull(SecurityUtil.getCurrentUser());
+        return userMapper.toResource(currentUser);
     }
 
     private User findUserById(Long id) {

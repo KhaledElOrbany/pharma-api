@@ -19,6 +19,11 @@ public class UserController extends BaseController {
         this.userService = userService;
     }
 
+    @GetMapping(path = "/current")
+    public ApiResponse getCurrentUser() {
+        return respond(userService.getCurrentUser());
+    }
+
     @GetMapping(path = "/{id}")
     public ApiResponse getUserById(@PathVariable("id") Long id) {
         return respond(userService.getUserById(id));
