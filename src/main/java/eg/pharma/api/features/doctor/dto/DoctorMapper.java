@@ -35,7 +35,8 @@ public class DoctorMapper implements IMapper<Doctor, DoctorResource, DoctorReque
                 doctor.getAddress(),
                 doctor.getPhone(),
                 doctor.getClinicPhone(),
-                doctorClassResource
+                doctorClassResource,
+                doctor.getDeleted()
         );
     }
 
@@ -52,7 +53,8 @@ public class DoctorMapper implements IMapper<Doctor, DoctorResource, DoctorReque
                 doctor.getAddress(),
                 doctor.getPhone(),
                 doctor.getClinicPhone(),
-                null
+                null,
+                doctor.getDeleted()
         );
     }
 

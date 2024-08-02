@@ -11,6 +11,7 @@ public record DoctorResource(
         String address,
         String phone,
         String clinicPhone,
-        DoctorClassResource doctorClass
+        DoctorClassResource doctorClass,
+        boolean isDelete
 ) {
 }
