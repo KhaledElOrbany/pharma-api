@@ -37,7 +37,8 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
                 user.getGender(),
                 user.getDistrict(),
                 cityMapper.toResource(user.getCity()),
-                roleMapper.toResource(user.getRole())
+                roleMapper.toResource(user.getRole()),
+                user.getDeleted()
         );
     }
 
