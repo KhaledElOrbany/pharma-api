@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pharmacies")
+@RequestMapping("/api/pharmacy")
 public class PharmacyController extends BaseController {
 
     private final PharmacyService pharmacyService;
