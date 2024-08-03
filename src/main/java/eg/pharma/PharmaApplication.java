@@ -53,7 +53,7 @@ public class PharmaApplication {
                         \tAccess URLs:
                         \t* Local\t\t: {}://localhost:{}{}
                         \t* External\t: {}://{}:{}{}
-                        \t* Profile(s)\t: {}
+                        \t* Profile(s): {}
                         ----------------------------------------------------------""",
                 applicationName,
                 protocol,
