@@ -15,6 +15,6 @@ public record UserResource(
         String district,
         CityResource city,
         RoleResource role,
-        boolean isDelete
+        boolean isDeleted
 ) {
 }
