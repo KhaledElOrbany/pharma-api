@@ -4,6 +4,9 @@ import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.medicine.dto.MedicineMapper;
 import eg.pharma.api.features.medicine.dto.MedicineRequest;
 import eg.pharma.api.features.medicine.dto.MedicineResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +36,10 @@ public class MedicineService {
         return medicineMapper.toResource(medicine);
     }
 
-    public List<MedicineResource> getAllMedicines() {
-        List<Medicine> medicines = medicineRepository.findAll();
-        return medicineMapper.toResourceList(medicines);
+    public List<MedicineResource> getAllMedicines(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Medicine> medicines = medicineRepository.findAll(pageable);
+        return medicineMapper.toResourceList(medicines.getContent());
     }
 
     public MedicineResource createMedicine(MedicineRequest medicineRequest) {

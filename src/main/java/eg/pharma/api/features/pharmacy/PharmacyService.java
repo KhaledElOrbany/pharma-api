@@ -4,6 +4,9 @@ import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.features.pharmacy.dto.PharmacyMapper;
 import eg.pharma.api.features.pharmacy.dto.PharmacyRequest;
 import eg.pharma.api.features.pharmacy.dto.PharmacyResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +29,10 @@ public class PharmacyService {
         return pharmacyMapper.toResource(pharmacy);
     }
 
-    public List<PharmacyResource> getAllPharmacies() {
-        List<Pharmacy> pharmacies = pharmacyRepository.findAll();
-        return pharmacyMapper.toResourceList(pharmacies);
+    public List<PharmacyResource> getAllPharmacies(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Pharmacy> pharmacies = pharmacyRepository.findAll(pageable);
+        return pharmacyMapper.toResourceList(pharmacies.getContent());
     }
 
     public PharmacyResource createPharmacy(PharmacyRequest pharmacyRequest) {

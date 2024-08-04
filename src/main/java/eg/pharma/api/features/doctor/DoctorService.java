@@ -6,6 +6,9 @@ import eg.pharma.api.features.doctorClass.DoctorClass;
 import eg.pharma.api.features.doctorClass.DoctorClassService;
 import eg.pharma.api.features.doctor.dto.DoctorRequest;
 import eg.pharma.api.features.doctor.dto.DoctorResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +36,10 @@ public class DoctorService {
         return doctorMapper.toResource(doctor);
     }
 
-    public List<DoctorResource> getAllDoctors() {
-        List<Doctor> doctors = doctorRepository.findAll();
-        return doctorMapper.toResourceList(doctors);
+    public List<DoctorResource> getAllDoctors(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Doctor> doctors = doctorRepository.findAll(pageable);
+        return doctorMapper.toResourceList(doctors.getContent());
     }
 
     public DoctorResource createDoctor(DoctorRequest doctorRequest) {

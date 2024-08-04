@@ -25,9 +25,11 @@ public class MedicineController extends BaseController {
 
     @GetMapping(path = "/list")
     public ApiResponse getAllMedicines() {
-        List<?> data = medicineService.getAllMedicines();
+        List<?> data = medicineService.getAllMedicines(page, size);
         return respond(data, new HashMap<>() {{
             put("total", data.size());
+            put("page", page);
+            put("size", size);
         }});
     }
 
