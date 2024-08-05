@@ -112,10 +112,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         response.setStatus(status);
         response.setContentType("application/json");
-        HashMap<String, Object> data = new HashMap<>() {{
+        HashMap<String, String> data = new HashMap<>() {{
             put("error", message);
         }};
-        HashMap<String, Object> meta = new HashMap<>() {{
+        HashMap<String, Integer> meta = new HashMap<>() {{
             put("code", status);
         }};
         response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
