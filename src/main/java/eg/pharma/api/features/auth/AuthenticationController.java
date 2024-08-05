@@ -3,7 +3,6 @@ package eg.pharma.api.features.auth;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.auth.dto.LoginRequest;
-import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,8 @@ public class AuthenticationController extends BaseController {
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(AuthenticationService authenticationService, TablesMetaDataService tablesMetaDataService) {
-        super(tablesMetaDataService);
+    public AuthenticationController(AuthenticationService authenticationService) {
+        super();
         this.authenticationService = authenticationService;
     }
 

@@ -2,7 +2,6 @@ package eg.pharma.api.features.user;
 
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
-import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
 import eg.pharma.api.features.user.dto.UserRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +14,8 @@ public class UserController extends BaseController {
 
     private final UserService userService;
 
-    public UserController(UserService userService, TablesMetaDataService tablesMetaDataService) {
-        super(tablesMetaDataService);
+    public UserController(UserService userService) {
+        super();
         this.userService = userService;
     }
 

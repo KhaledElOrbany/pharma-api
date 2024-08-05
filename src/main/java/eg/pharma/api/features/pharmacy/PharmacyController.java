@@ -3,7 +3,6 @@ package eg.pharma.api.features.pharmacy;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.pharmacy.dto.PharmacyRequest;
-import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -15,8 +14,8 @@ public class PharmacyController extends BaseController {
 
     private final PharmacyService pharmacyService;
 
-    public PharmacyController(PharmacyService pharmacyService, TablesMetaDataService tablesMetaDataService) {
-        super(tablesMetaDataService);
+    public PharmacyController(PharmacyService pharmacyService) {
+        super();
         this.pharmacyService = pharmacyService;
     }
 

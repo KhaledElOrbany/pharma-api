@@ -2,6 +2,7 @@ package eg.pharma.api.base;
 
 import eg.pharma.api.features.tablesmetadata.TablesMetaData;
 import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.WebRequest;
@@ -14,9 +15,10 @@ public class BaseController {
     protected int size = 5;
     protected Map<String, String[]> params;
 
-    private final TablesMetaDataService tablesMetaDataService;
+    private TablesMetaDataService tablesMetaDataService;
 
-    public BaseController(TablesMetaDataService tablesMetaDataService) {
+    @Autowired
+    public void setTablesMetaDataService(TablesMetaDataService tablesMetaDataService) {
         this.tablesMetaDataService = tablesMetaDataService;
     }
 
