@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pharma
+    username: el3orb
+    password: Pa$$w0rd!
+    hikari:
+      schema: pharma
+    driver-class-name: org.postgresql.Driver
+
