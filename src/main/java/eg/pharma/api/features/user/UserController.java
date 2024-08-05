@@ -2,6 +2,7 @@ package eg.pharma.api.features.user;
 
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
+import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
 import eg.pharma.api.features.user.dto.UserRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,8 @@ public class UserController extends BaseController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        super();
+    public UserController(UserService userService, TablesMetaDataService tablesMetaDataService) {
+        super(tablesMetaDataService);
         this.userService = userService;
     }
 
@@ -33,6 +34,7 @@ public class UserController extends BaseController {
     public ApiResponse getAllUsers() {
         List<?> data = userService.getAllUsers(page, size);
         return respond(data, new HashMap<>() {{
+            put("tableMetaData", getTablesMetaData("usersList"));
             put("total", data.size());
             put("page", page);
             put("size", size);

@@ -1,10 +1,12 @@
 package eg.pharma.api.base;
 
+import eg.pharma.api.features.tablesmetadata.TablesMetaData;
+import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.Map;
+import java.util.*;
 
 public class BaseController {
 
@@ -12,7 +14,29 @@ public class BaseController {
     protected int size = 5;
     protected Map<String, String[]> params;
 
-    public BaseController() {
+    private final TablesMetaDataService tablesMetaDataService;
+
+    public BaseController(TablesMetaDataService tablesMetaDataService) {
+        this.tablesMetaDataService = tablesMetaDataService;
+    }
+
+    public List<HashMap<String, ?>> getTablesMetaData(String tableName) {
+        List<TablesMetaData> tablesMetaData = tablesMetaDataService.getTablesMetaData(tableName);
+        List<HashMap<String, ?>> metaData = new ArrayList<>();
+
+        for (TablesMetaData tableMetaData : tablesMetaData) {
+            metaData.add(new HashMap<>(){{
+                put("tableName", tableMetaData.getTableName());
+                put("columnName", tableMetaData.getColumnName());
+                put("hasLink", tableMetaData.getHasLink());
+                put("link", tableMetaData.getLink());
+                put("isSearchable", tableMetaData.getSearchable());
+                put("isSortable", tableMetaData.getSortable());
+                put("isVisible", tableMetaData.getVisible());
+            }});
+        }
+
+        return metaData;
     }
 
     @ModelAttribute

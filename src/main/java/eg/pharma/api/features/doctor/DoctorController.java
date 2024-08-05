@@ -3,6 +3,7 @@ package eg.pharma.api.features.doctor;
 import eg.pharma.api.base.ApiResponse;
 import eg.pharma.api.base.BaseController;
 import eg.pharma.api.features.doctor.dto.DoctorRequest;
+import eg.pharma.api.features.tablesmetadata.TablesMetaDataService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,7 +15,8 @@ public class DoctorController extends BaseController {
 
     private final DoctorService doctorService;
 
-    public DoctorController(DoctorService doctorService) {
+    public DoctorController(DoctorService doctorService, TablesMetaDataService tablesMetaDataService) {
+        super(tablesMetaDataService);
         this.doctorService = doctorService;
     }
 
