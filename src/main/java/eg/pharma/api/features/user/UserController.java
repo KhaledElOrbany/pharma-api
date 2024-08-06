@@ -33,6 +33,7 @@ public class UserController extends BaseController {
     public ApiResponse getAllUsers() {
         List<?> data = userService.getAllUsers(page, size);
         return respond(data, new HashMap<>() {{
+            put("tableMetaData", getTablesMetaData("usersList"));
             put("total", data.size());
             put("page", page);
             put("size", size);
