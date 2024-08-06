@@ -4,7 +4,7 @@ create table tables_meta_data
     table_name      varchar(127) not null,
     column_name     varchar(127) not null,
     column_type     varchar(127) not null,
-    has_link         boolean default false,
+    has_link        boolean default false,
     link            varchar(127),
     is_searchable   boolean default false,
     is_sortable     boolean default false,
