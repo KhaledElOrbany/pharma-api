@@ -9,5 +9,6 @@ create table tables_meta_data
     is_searchable   boolean default false,
     is_sortable     boolean default false,
     is_visible      boolean default false,
+    column_order    integer,
     primary key (id)
 );

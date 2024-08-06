@@ -124,7 +124,9 @@ create table "user"
     email           varchar(255),
     password        varchar(255) not null,
     phone           varchar(11)  not null unique,
+    address         varchar(255) not null,
     role_id         bigint,
+    city_id         bigint,
     is_deleted      boolean,
     created_at      timestamp(6),
     updated_at      timestamp(6),
@@ -224,6 +226,11 @@ alter table if exists "user"
     references "user";
 
 alter table if exists "user"
-    add constraint FKdl9dqp078pc03g6kdnxmnlqpc
+    add constraint fk_user_role_id
     foreign key (role_id)
     references role;
+
+alter table if exists "user"
+    add constraint fk_user_city_id
+    foreign key ("city_id")
+    references city;

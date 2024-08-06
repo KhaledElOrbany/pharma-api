@@ -30,6 +30,7 @@ public class BaseController {
             metaData.add(new HashMap<>(){{
                 put("tableName", tableMetaData.getTableName());
                 put("columnName", tableMetaData.getColumnName());
+                put("columnType", tableMetaData.getColumnType());
                 put("hasLink", tableMetaData.getHasLink());
                 put("link", tableMetaData.getLink());
                 put("isSearchable", tableMetaData.getSearchable());

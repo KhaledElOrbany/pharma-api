@@ -55,7 +55,7 @@ public class User extends Audit implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    private String district;
+    private String address;
 
     @OneToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
@@ -155,6 +155,10 @@ public class User extends Audit implements UserDetails {
         this.phone = phone;
     }
 
+    public String getRoleName() {
+        return this.role.getName();
+    }
+
     public Role getRole() {
         return this.role;
     }
@@ -171,12 +175,16 @@ public class User extends Audit implements UserDetails {
         this.gender = gender;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCityName() {
+        return this.city.getNameAr();
     }
 
     public City getCity() {
