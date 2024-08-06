@@ -27,7 +27,7 @@ public class BaseController {
         List<HashMap<String, ?>> metaData = new ArrayList<>();
 
         for (TablesMetaData tableMetaData : tablesMetaData) {
-            metaData.add(new HashMap<>(){{
+            metaData.add(new HashMap<>() {{
                 put("tableName", tableMetaData.getTableName());
                 put("columnName", tableMetaData.getColumnName());
                 put("columnType", tableMetaData.getColumnType());
