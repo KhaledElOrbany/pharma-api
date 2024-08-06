@@ -15,7 +15,6 @@ public class MedicineController extends BaseController {
     private final MedicineService medicineService;
 
     public MedicineController(MedicineService medicineService) {
-        super();
         this.medicineService = medicineService;
     }
 
