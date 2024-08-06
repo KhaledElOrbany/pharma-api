@@ -31,8 +31,10 @@ public class BaseController {
                 put("tableName", tableMetaData.getTableName());
                 put("columnName", tableMetaData.getColumnName());
                 put("columnType", tableMetaData.getColumnType());
+                put("columnOrder", tableMetaData.getColumnOrder());
                 put("hasLink", tableMetaData.getHasLink());
-                put("link", tableMetaData.getLink());
+                put("baseLink", tableMetaData.getBaseLink());
+                put("linkTo", tableMetaData.getLinkTo());
                 put("isSearchable", tableMetaData.getSearchable());
                 put("isSortable", tableMetaData.getSortable());
                 put("isVisible", tableMetaData.getVisible());

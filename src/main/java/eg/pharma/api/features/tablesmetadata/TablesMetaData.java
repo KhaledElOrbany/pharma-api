@@ -13,8 +13,10 @@ public class TablesMetaData {
     private String tableName;
     private String columnName;
     private String columnType;
+    private Integer columnOrder;
     private Boolean hasLink;
-    private String link;
+    private String baseLink;
+    private String linkTo;
     private Boolean isSearchable;
     private Boolean isSortable;
     private Boolean isVisible;
@@ -54,6 +56,14 @@ public class TablesMetaData {
         this.columnType = columnType;
     }
 
+    public Integer getColumnOrder() {
+        return columnOrder;
+    }
+
+    public void setColumnOrder(Integer columnOrder) {
+        this.columnOrder = columnOrder;
+    }
+
     public Boolean getHasLink() {
         return hasLink;
     }
@@ -62,12 +72,20 @@ public class TablesMetaData {
         this.hasLink = hasLink;
     }
 
-    public String getLink() {
-        return link;
+    public String getBaseLink() {
+        return baseLink;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setBaseLink(String baseLink) {
+        this.baseLink = baseLink;
+    }
+
+    public String getLinkTo() {
+        return linkTo;
+    }
+
+    public void setLinkTo(String linkTo) {
+        this.linkTo = linkTo;
     }
 
     public Boolean getSearchable() {
