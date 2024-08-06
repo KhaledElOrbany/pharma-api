@@ -11,7 +11,6 @@ public class PermissionController extends BaseController {
     private final PermissionService permissionService;
 
     public PermissionController(PermissionService permissionService) {
-        super();
         this.permissionService = permissionService;
     }
 }

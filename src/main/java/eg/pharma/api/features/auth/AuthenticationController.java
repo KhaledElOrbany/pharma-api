@@ -13,7 +13,6 @@ public class AuthenticationController extends BaseController {
     private final AuthenticationService authenticationService;
 
     public AuthenticationController(AuthenticationService authenticationService) {
-        super();
         this.authenticationService = authenticationService;
     }
 
