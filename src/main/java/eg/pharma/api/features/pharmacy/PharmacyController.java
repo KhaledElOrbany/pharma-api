@@ -15,7 +15,6 @@ public class PharmacyController extends BaseController {
     private final PharmacyService pharmacyService;
 
     public PharmacyController(PharmacyService pharmacyService) {
-        super();
         this.pharmacyService = pharmacyService;
     }
 
