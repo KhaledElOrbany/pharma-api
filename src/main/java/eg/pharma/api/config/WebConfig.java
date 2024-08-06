@@ -1,6 +1,7 @@
 package eg.pharma.api.config;
 
 import eg.pharma.api.helpers.interceptors.JwtInterceptor;
+import eg.pharma.api.helpers.interceptors.LocaleInterceptor;
 import eg.pharma.api.helpers.interceptors.LoggingInterceptor;
 import eg.pharma.api.helpers.services.JwtService;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor(jwtService));
         registry.addInterceptor(new LoggingInterceptor());
+        registry.addInterceptor(new LocaleInterceptor());
     }
 
     @Override

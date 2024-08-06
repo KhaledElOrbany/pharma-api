@@ -1,12 +1,23 @@
 package eg.pharma.api.helpers.services;
 
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MessageService {
 
-    private final ResourceBundleMessageSource messageSource;
+    private final MessageSource messageSource;
 
-    public MessageService(ResourceBundleMessageSource messageSource) {
+    public MessageService(MessageSource messageSource) {
         this.messageSource = messageSource;
+    }
+
+    public String getMessage(String code) {
+        return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
+    }
+
+    public String getMessage(String code, Object[] args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

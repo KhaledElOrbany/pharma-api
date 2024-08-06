@@ -6,6 +6,7 @@ import eg.pharma.api.features.role.Role;
 import eg.pharma.api.features.audit.Audit;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -184,7 +185,12 @@ public class User extends Audit implements UserDetails {
     }
 
     public String getCityName() {
-        return this.city.getNameAr();
+        String language = LocaleContextHolder.getLocale().getLanguage();
+        if (language.equals("ar")) {
+            return this.city.getNameAr();
+        } else {
+            return this.city.getNameEn();
+        }
     }
 
     public City getCity() {
