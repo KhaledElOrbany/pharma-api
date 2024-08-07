@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eg.pharma.api.exception.ErrorResponse;
 import eg.pharma.api.helpers.services.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,10 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(
-            JwtService jwtService,
-            UserDetailsService userDetailsService
-    ) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
     }
@@ -52,27 +50,52 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = jwtService.extractUsername(token);
             authenticateUser(request, username, token);
         } catch (ExpiredJwtException ex) {
-            String refreshToken = jwtService.retrieveRefreshToken(request);
-            try {
-                String username = jwtService.extractUsername(refreshToken);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                if (jwtService.isTokenValid(refreshToken, userDetails)) {
-                    setAuthentication(userDetails, request);
-                    String newToken = jwtService.generateToken(userDetails);
-                    response.setHeader("Authorization", "Bearer " + newToken);
-                }
-            } catch (Exception e) {
-                handleError(response, e);
-            }
+            handleExpiredToken(request, response);
         } catch (Exception ex) {
             handleError(response, ex);
+            return;
         }
 
+        filterChain.doFilter(request, response);
+    }
+
+    private void handleExpiredToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String refreshToken = jwtService.retrieveRefreshToken(request);
         try {
-            filterChain.doFilter(request, response);
-        } catch (Exception ex) {
-            handleError(response, ex);
+            String username = jwtService.extractUsername(refreshToken);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (jwtService.isTokenValid(refreshToken, userDetails)) {
+                setAuthentication(userDetails, request);
+                String newToken = jwtService.generateToken(userDetails);
+                response.setHeader("Authorization", "Bearer " + newToken);
+            }
+        } catch (Exception e) {
+            handleError(response, e);
         }
+    }
+
+    private void handleError(@NonNull HttpServletResponse response, @NonNull Exception ex) throws IOException {
+        int status;
+        String message;
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        if (ex instanceof JwtException) {
+            message = "Token is invalid!";
+            status = HttpServletResponse.SC_UNAUTHORIZED;
+        } else {
+            message = "An error has occurred!";
+            status = HttpServletResponse.SC_BAD_REQUEST;
+        }
+
+        response.setStatus(status);
+        response.setContentType("application/json");
+        HashMap<String, Object> data = new HashMap<>() {{
+            put("error", message);
+        }};
+        HashMap<String, Object> meta = new HashMap<>() {{
+            put("code", status);
+        }};
+        response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
     }
 
     private void authenticateUser(HttpServletRequest request, String username, String token) {
@@ -85,39 +108,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthentication(UserDetails userDetails, HttpServletRequest request) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
-                userDetails.getAuthorities()
-        );
-        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authToken);
-    }
-
-    private void handleError(
-            @NonNull HttpServletResponse response,
-            @NonNull Exception ex
-    ) throws IOException {
-        int status;
-        String message;
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        if (ex instanceof ExpiredJwtException) {
-            message = "Token expired!";
-            status = HttpServletResponse.SC_UNAUTHORIZED;
-        } else {
-            message = "An error has occurred!";
-            status = HttpServletResponse.SC_BAD_REQUEST;
-        }
-
-        response.setStatus(status);
-        response.setContentType("application/json");
-        HashMap<String, String> data = new HashMap<>() {{
-            put("error", message);
-        }};
-        HashMap<String, Integer> meta = new HashMap<>() {{
-            put("code", status);
-        }};
-        response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(data, meta)));
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
