@@ -67,7 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwtService.isTokenValid(refreshToken, userDetails)) {
                 setAuthentication(userDetails, request);
                 String newToken = jwtService.generateToken(userDetails);
-                response.setHeader("Authorization", "Bearer " + newToken);
+                response.setHeader("Authorization", newToken);
             }
         } catch (Exception e) {
             handleError(response, e);
