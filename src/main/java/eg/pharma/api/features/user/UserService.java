@@ -57,16 +57,19 @@ public class UserService extends BaseService {
                 request.getEmail()
         );
         user.setRole(request.getRole());
+        user.setCity(request.getCity());
         user = userRepository.save(user);
 
-        if (user.getEmail() != null) {
-            String creator = user.getCreatedBy().getFirstName() + " " + user.getCreatedBy().getLastName();
-            mailService.sendEmail(new Mail(
-                    new String[]{user.getEmail()},
-                    "Welcome to Pharma!",
-                    "Your account has been created by " + creator + ". Your username is: " + user.getUsername())
-            );
-        }
+        /*
+         *   if (user.getEmail() != null) {
+         *       String creator = user.getCreatedBy().getFirstName() + " " + user.getCreatedBy().getLastName();
+         *       mailService.sendEmail(new Mail(
+         *               new String[]{user.getEmail()},
+         *               "Welcome to Pharma!",
+         *               "Your account has been created by " + creator + ". Your username is: " + user.getUsername())
+         *       );
+         *   }
+         */
 
         return userMapper.toResource(user);
     }
