@@ -24,7 +24,7 @@ public class CityController extends BaseController {
     }
 
     @GetMapping(path = "/list")
-    public ApiResponse getAllCities(@PathVariable Long governorateId) {
+    public ApiResponse getAllCities(@RequestParam Long governorateId) {
         List<?> data = cityService.getAllCities(governorateId);
         return respond(data, new HashMap<>() {{
             put("total", data.size());
