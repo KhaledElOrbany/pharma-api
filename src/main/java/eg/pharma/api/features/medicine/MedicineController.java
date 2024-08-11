@@ -33,12 +33,12 @@ public class MedicineController extends BaseController {
         }});
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ApiResponse createMedicine(@RequestBody MedicineRequest medicineRequest) {
         return respond(medicineService.createMedicine(medicineRequest));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/update/{id}")
     public ApiResponse updateMedicine(@PathVariable("id") Long id, @RequestBody MedicineRequest medicineRequest) {
         return respond(medicineService.updateMedicine(id, medicineRequest));
     }

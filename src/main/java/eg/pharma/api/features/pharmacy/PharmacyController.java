@@ -33,12 +33,12 @@ public class PharmacyController extends BaseController {
         }});
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ApiResponse createPharmacy(PharmacyRequest pharmacyRequest) {
         return respond(pharmacyService.createPharmacy(pharmacyRequest));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/update/{id}")
     public ApiResponse updatePharmacy(@PathVariable("id") Long id, PharmacyRequest pharmacyRequest) {
         return respond(pharmacyService.updatePharmacy(id, pharmacyRequest));
     }

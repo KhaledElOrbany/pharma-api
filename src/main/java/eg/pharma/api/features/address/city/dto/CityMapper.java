@@ -27,7 +27,6 @@ public class CityMapper implements IMapper<City, CityResource, CityRequest> {
         return new CityResource(
                 city.getId(),
                 city.getNameAr(),
-                city.getNameEn(),
                 governorateMapper.toResource(city.getGovernorate())
         );
     }

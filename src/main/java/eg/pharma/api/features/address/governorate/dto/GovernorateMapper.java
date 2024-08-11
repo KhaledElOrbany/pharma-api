@@ -17,8 +17,7 @@ public class GovernorateMapper implements IMapper<Governorate, GovernorateResour
     public GovernorateResource toResource(Governorate governorate) {
         return new GovernorateResource(
                 governorate.getId(),
-                governorate.getNameAr(),
-                governorate.getNameEn()
+                governorate.getNameAr()
         );
     }
 

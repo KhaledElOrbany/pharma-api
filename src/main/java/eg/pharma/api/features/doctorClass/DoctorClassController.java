@@ -34,12 +34,12 @@ public class DoctorClassController extends BaseController {
     }
 
 
-    @PostMapping
+    @PostMapping("/create")
     public ApiResponse createDoctorClass(@RequestBody DoctorClassRequest doctorRequest) {
         return respond(doctorClassService.createDoctorClass(doctorRequest));
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/update/{id}")
     public ApiResponse updateDoctorClass(@PathVariable("id") Long id, @RequestBody DoctorClassRequest doctorRequest) {
         return respond(doctorClassService.updateDoctorClass(id, doctorRequest));
     }

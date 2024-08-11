@@ -31,12 +31,12 @@ public class GovernorateController extends BaseController {
         }});
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ApiResponse createGovernorate(@RequestBody GovernorateRequest governorateRequest) {
         return respond(governorateService.createGovernorate(governorateRequest));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/update/{id}")
     public ApiResponse updateGovernorate(@PathVariable("id") Long id, @RequestBody GovernorateRequest governorateRequest) {
         return respond(governorateService.updateGovernorate(id, governorateRequest));
     }

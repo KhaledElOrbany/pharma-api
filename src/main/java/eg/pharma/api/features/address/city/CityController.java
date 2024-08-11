@@ -31,12 +31,12 @@ public class CityController extends BaseController {
         }});
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ApiResponse createCity(@RequestBody CityRequest cityRequest) {
         return respond(cityService.createCity(cityRequest));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/update/{id}")
     public ApiResponse updateCity(@PathVariable("id") Long id, @RequestBody CityRequest cityRequest) {
         return respond(cityService.updateCity(id, cityRequest));
     }
