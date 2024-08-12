@@ -11,6 +11,17 @@ import java.util.HashMap;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
+        BusinessException businessException;
+        if (ex instanceof BusinessException) {
+            businessException = (BusinessException) ex;
+        } else {
+            businessException = new BusinessException(ex.getMessage());
+        }
+        return handleBusinessException(businessException);
+    }
+
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex) {
         HashMap<?, ?> data = new HashMap<>() {{

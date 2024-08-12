@@ -1,6 +1,7 @@
 package eg.pharma.api.helpers.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eg.pharma.api.exception.BusinessException;
 import eg.pharma.api.exception.ErrorResponse;
 import eg.pharma.api.helpers.services.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,7 +57,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        filterChain.doFilter(request, response);
+        try {
+            filterChain.doFilter(request, response);
+        } catch (Exception ex) {
+            throw new BusinessException(ex.getMessage());
+        }
     }
 
     private void handleExpiredToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
