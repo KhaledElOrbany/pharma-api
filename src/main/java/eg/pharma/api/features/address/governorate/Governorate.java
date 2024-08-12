@@ -17,10 +17,7 @@ public class Governorate extends Audit {
     private Long id;
 
     @Column(nullable = false)
-    private String nameAr;
-
-    @Column(nullable = false)
-    private String nameEn;
+    private String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "governorate")
@@ -29,9 +26,8 @@ public class Governorate extends Audit {
     public Governorate() {
     }
 
-    public Governorate(String nameAr, String nameEn) {
-        this.nameAr = nameAr;
-        this.nameEn = nameEn;
+    public Governorate(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -42,20 +38,12 @@ public class Governorate extends Audit {
         this.id = id;
     }
 
-    public String getNameAr() {
-        return nameAr;
+    public String getName() {
+        return name;
     }
 
-    public void setNameAr(String nameAr) {
-        this.nameAr = nameAr;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<City> getCities() {

@@ -26,7 +26,7 @@ public class CityMapper implements IMapper<City, CityResource, CityRequest> {
     public CityResource toResource(City city) {
         return new CityResource(
                 city.getId(),
-                city.getNameAr(),
+                city.getName(),
                 governorateMapper.toResource(city.getGovernorate())
         );
     }
@@ -34,15 +34,13 @@ public class CityMapper implements IMapper<City, CityResource, CityRequest> {
     @Override
     public City toEntity(CityRequest request) {
         return new City(
-                request.getNameAr(),
-                request.getNameEn()
+                request.getName()
         );
     }
 
     @Override
     public City updateEntity(City city, CityRequest request) {
-        city.setNameAr(request.getNameAr());
-        city.setNameEn(request.getNameEn());
+        city.setName(request.getName());
         return city;
     }
 }

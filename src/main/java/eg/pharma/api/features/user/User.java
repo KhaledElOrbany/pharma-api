@@ -185,12 +185,7 @@ public class User extends Audit implements UserDetails {
     }
 
     public String getCityName() {
-        String language = LocaleContextHolder.getLocale().getLanguage();
-        if (language.equals("ar")) {
-            return this.city.getNameAr();
-        } else {
-            return this.city.getNameEn();
-        }
+        return this.city.getName();
     }
 
     public City getCity() {

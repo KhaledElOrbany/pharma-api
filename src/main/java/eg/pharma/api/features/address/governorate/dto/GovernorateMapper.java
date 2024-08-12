@@ -17,22 +17,20 @@ public class GovernorateMapper implements IMapper<Governorate, GovernorateResour
     public GovernorateResource toResource(Governorate governorate) {
         return new GovernorateResource(
                 governorate.getId(),
-                governorate.getNameAr()
+                governorate.getName()
         );
     }
 
     @Override
     public Governorate toEntity(GovernorateRequest request) {
         return new Governorate(
-                request.getNameAr(),
-                request.getNameEn()
+                request.getName()
         );
     }
 
     @Override
     public Governorate updateEntity(Governorate governorate, GovernorateRequest request) {
-        governorate.setNameAr(request.getNameAr());
-        governorate.setNameEn(request.getNameEn());
+        governorate.setName(request.getName());
         return governorate;
     }
 }

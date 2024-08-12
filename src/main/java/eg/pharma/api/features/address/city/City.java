@@ -13,10 +13,7 @@ public class City extends Audit {
     private Long id;
 
     @Column(nullable = false)
-    private String nameAr;
-
-    @Column(nullable = false)
-    private String nameEn;
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "governorate_id", referencedColumnName = "id")
@@ -25,9 +22,8 @@ public class City extends Audit {
     public City() {
     }
 
-    public City(String nameAr, String nameEn) {
-        this.nameAr = nameAr;
-        this.nameEn = nameEn;
+    public City(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -38,20 +34,12 @@ public class City extends Audit {
         this.id = id;
     }
 
-    public String getNameAr() {
-        return nameAr;
+    public String getName() {
+        return name;
     }
 
-    public void setNameAr(String nameAr) {
-        this.nameAr = nameAr;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Governorate getGovernorate() {
