@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class UserService extends BaseService {
@@ -27,39 +26,37 @@ public class UserService extends BaseService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
+    private final UserValidator userValidator;
 
     public UserService(
             UserMapper userMapper,
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder, MailService mailService
+            PasswordEncoder passwordEncoder, MailService mailService,
+            UserValidator userValidator
     ) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
+        this.userValidator = userValidator;
     }
 
-    public UserResource create(UserRequest request) {
-        Optional<User> existingUser = userRepository.findByUsername(request.getUsername());
-        if (existingUser.isPresent()) {
-            throw new BusinessException(
-                    "User with username " + request.getUsername() + " already exists!",
-                    HttpStatus.CONFLICT
-            );
-        }
+    public UserResource create(UserRequest userRequest) {
+        User user = userMapper.toEntity(userRequest);
+        userValidator.validate(user);
 
         String password = SecurityUtil.alphaNumericString(6);
-        User user = new User(
-                request.getUsername(),
-                request.getFirstName(),
-                request.getLastName(),
+        user = new User(
+                userRequest.getUsername(),
+                userRequest.getFirstName(),
+                userRequest.getLastName(),
                 passwordEncoder.encode(password),
-                request.getPhone(),
-                request.getEmail(),
-                request.getGender()
+                userRequest.getPhone(),
+                userRequest.getEmail(),
+                userRequest.getGender()
         );
-        user.setRole(request.getRole());
-        user.setCity(request.getCity());
+        user.setRole(userRequest.getRole());
+        user.setCity(userRequest.getCity());
         user = userRepository.save(user);
 
         if (user.getEmail() != null) {
