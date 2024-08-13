@@ -40,7 +40,7 @@ class DoctorServiceTest {
 
     @Test
     void getAllDoctors() {
-        doctorService.getAllDoctors();
+        doctorService.getAllDoctors(0 ,5);
         verify(doctorRepository).findAll();
     }
 
