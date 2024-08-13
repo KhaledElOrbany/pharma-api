@@ -20,11 +20,18 @@ public class DoctorService {
     private final DoctorMapper doctorMapper;
     private final DoctorRepository doctorRepository;
     private final DoctorClassService doctorClassService;
+    private final DoctorValidator doctorValidator;
 
-    public DoctorService(DoctorMapper doctorMapper, DoctorRepository doctorRepository, DoctorClassService doctorClassService) {
+    public DoctorService(
+            DoctorMapper doctorMapper,
+            DoctorRepository doctorRepository,
+            DoctorClassService doctorClassService,
+            DoctorValidator doctorValidator
+    ) {
         this.doctorMapper = doctorMapper;
         this.doctorRepository = doctorRepository;
         this.doctorClassService = doctorClassService;
+        this.doctorValidator = doctorValidator;
     }
 
     private Doctor findDoctorById(Long id) {
@@ -44,12 +51,14 @@ public class DoctorService {
 
     public DoctorResource createDoctor(DoctorRequest doctorRequest) {
         Doctor doctor = doctorMapper.toEntity(doctorRequest);
+        doctorValidator.validate(doctor);
         doctor = doctorRepository.save(doctor);
         return doctorMapper.toResource(doctor);
     }
 
     public DoctorResource updateDoctor(Long id, DoctorRequest doctorRequest) {
         Doctor doctor = findDoctorById(id);
+        doctorValidator.validate(doctor);
         doctor = doctorMapper.updateEntity(doctor, doctorRequest);
         doctor = doctorRepository.save(doctor);
         return doctorMapper.toResource(doctor);
