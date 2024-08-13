@@ -40,7 +40,8 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
                 request.getLastName(),
                 request.getPassword(),
                 request.getPhone(),
-                request.getEmail()
+                request.getEmail(),
+                request.getGender()
         );
     }
 

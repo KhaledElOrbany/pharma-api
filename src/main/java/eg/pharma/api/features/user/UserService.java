@@ -48,28 +48,27 @@ public class UserService extends BaseService {
             );
         }
 
+        String password = SecurityUtil.alphaNumericString(6);
         User user = new User(
                 request.getUsername(),
                 request.getFirstName(),
                 request.getLastName(),
-                passwordEncoder.encode(request.getPassword()),
+                passwordEncoder.encode(password),
                 request.getPhone(),
-                request.getEmail()
+                request.getEmail(),
+                request.getGender()
         );
         user.setRole(request.getRole());
         user.setCity(request.getCity());
         user = userRepository.save(user);
 
-        /*
-         *   if (user.getEmail() != null) {
-         *       String creator = user.getCreatedBy().getFirstName() + " " + user.getCreatedBy().getLastName();
-         *       mailService.sendEmail(new Mail(
-         *               new String[]{user.getEmail()},
-         *               "Welcome to Pharma!",
-         *               "Your account has been created by " + creator + ". Your username is: " + user.getUsername())
-         *       );
-         *   }
-         */
+        if (user.getEmail() != null) {
+            String creator = user.getCreatedBy().getFirstName() + " " + user.getCreatedBy().getLastName();
+            String body = "Your account has been created by " + creator +
+                    ". Your username is: " + user.getUsername() + ", and your password is: " + password;
+
+            mailService.sendEmail(new Mail(new String[]{user.getEmail()}, "Welcome to Pharma!", body));
+        }
 
         return userMapper.toResource(user);
     }

@@ -65,13 +65,14 @@ public class User extends Audit implements UserDetails {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String password, String phone, String email) {
+    public User(String username, String firstName, String lastName, String password, String phone, String email, Gender gender) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phone = phone;
         this.email = email;
+        this.gender = gender;
     }
 
     public Long getId() {
