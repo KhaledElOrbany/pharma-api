@@ -22,11 +22,13 @@ class DoctorServiceTest {
     private DoctorRepository doctorRepository;
     @Mock
     private DoctorClassService doctorClassService;
+    @Mock
+    private DoctorValidator doctorValidator;
     private DoctorService doctorService;
 
     @BeforeEach
     void setUp() {
-        doctorService = new DoctorService(doctorMapper, doctorRepository, doctorClassService);
+        doctorService = new DoctorService(doctorMapper, doctorRepository, doctorClassService, doctorValidator);
     }
 
     @Test
