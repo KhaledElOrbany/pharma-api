@@ -34,15 +34,19 @@ public class UserMapper implements IMapper<User, UserResource, UserRequest> {
 
     @Override
     public User toEntity(UserRequest request) {
-        return new User(
+        User user = new User(
                 request.getUsername(),
                 request.getFirstName(),
                 request.getLastName(),
                 request.getPassword(),
                 request.getPhone(),
                 request.getEmail(),
+                request.getAddress(),
                 request.getGender()
         );
+        user.setRole(request.getRole());
+        user.setCity(request.getCity());
+        return user;
     }
 
     @Override

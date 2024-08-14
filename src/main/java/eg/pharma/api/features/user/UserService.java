@@ -46,20 +46,10 @@ public class UserService extends BaseService {
         userValidator.validate(user);
 
         String password = SecurityUtil.alphaNumericString(6);
-        user = new User(
-                userRequest.getUsername(),
-                userRequest.getFirstName(),
-                userRequest.getLastName(),
-                passwordEncoder.encode(password),
-                userRequest.getPhone(),
-                userRequest.getEmail(),
-                userRequest.getGender()
-        );
-        user.setRole(userRequest.getRole());
-        user.setCity(userRequest.getCity());
+        user.setPassword(passwordEncoder.encode(password));
         user = userRepository.save(user);
 
-        if (user.getEmail() != null) {
+        if (!user.getEmail().isEmpty()) {
             String creator = user.getCreatedBy().getFirstName() + " " + user.getCreatedBy().getLastName();
             String body = "Your account has been created by " + creator +
                     ". Your username is: " + user.getUsername() + ", and your password is: " + password;

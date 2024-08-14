@@ -25,5 +25,21 @@ public class UserValidator implements IValidator<User> {
                     HttpStatus.CONFLICT
             );
         }
+
+        if (user.getFirstName().isEmpty()) {
+            throw new BusinessException("Firstname cannot be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (user.getLastName().isEmpty()) {
+            throw new BusinessException("Lastname cannot be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (user.getPhone().isEmpty()) {
+            throw new BusinessException("Phone cannot be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (user.getCity() == null) {
+            throw new BusinessException("City cannot be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (user.getAddress().isEmpty()) {
+            throw new BusinessException("Address cannot be empty", HttpStatus.BAD_REQUEST);
+        }
     }
 }

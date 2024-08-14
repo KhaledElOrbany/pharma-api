@@ -11,6 +11,7 @@ public class UserRequest {
     private String password;
     private String phone;
     private String email;
+    private String address;
     private Gender gender;
     private Role role;
     private String district;
@@ -38,6 +39,10 @@ public class UserRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public Gender getGender() {
