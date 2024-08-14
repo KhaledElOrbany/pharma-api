@@ -40,12 +40,12 @@ public class UserController extends BaseController {
         }});
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ApiResponse create(@RequestBody UserRequest request) {
         return respond(userService.create(request));
     }
 
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/{id}")
     public ApiResponse updateUser(@PathVariable("id") Long id, @RequestBody UserRequest userRequest) {
         return respond(userService.updateUser(id, userRequest));
     }
