@@ -16,7 +16,7 @@ public class SecurityUtil {
         return (User) authentication.getPrincipal();
     }
 
-    public static String alphaNumericString(int len) {
+    public static String generateRandomAlphaNumericString(int len) {
         String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random rnd = new Random();
 

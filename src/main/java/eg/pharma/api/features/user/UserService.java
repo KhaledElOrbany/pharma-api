@@ -45,7 +45,7 @@ public class UserService extends BaseService {
         User user = userMapper.toEntity(userRequest);
         userValidator.validate(user);
 
-        String password = SecurityUtil.alphaNumericString(6);
+        String password = "start";
         user.setPassword(passwordEncoder.encode(password));
         user = userRepository.save(user);
 
