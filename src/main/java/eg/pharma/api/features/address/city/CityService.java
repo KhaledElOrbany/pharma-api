@@ -8,6 +8,7 @@ import eg.pharma.api.features.address.city.dto.CityMapper;
 import eg.pharma.api.features.address.city.dto.CityRequest;
 import eg.pharma.api.features.address.city.dto.CityResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,12 +41,14 @@ public class CityService {
         return cityMapper.toResourceList(cities);
     }
 
+    @Transactional
     public CityResource createCity(CityRequest cityRequest) {
         City city = cityMapper.toEntity(cityRequest);
         city = cityRepository.save(city);
         return cityMapper.toResource(city);
     }
 
+    @Transactional
     public CityResource updateCity(Long id, CityRequest cityRequest) {
         City city = cityRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("City not found", HttpStatus.NOT_FOUND));

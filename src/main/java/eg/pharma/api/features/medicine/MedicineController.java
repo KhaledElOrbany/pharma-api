@@ -33,7 +33,7 @@ public class MedicineController extends BaseController {
         }});
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ApiResponse createMedicine(@RequestBody MedicineRequest medicineRequest) {
         return respond(medicineService.createMedicine(medicineRequest));
     }

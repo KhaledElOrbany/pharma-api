@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,12 +43,14 @@ public class MedicineService {
         return medicineMapper.toResourceList(medicines.getContent());
     }
 
+    @Transactional
     public MedicineResource createMedicine(MedicineRequest medicineRequest) {
         Medicine medicine = medicineMapper.toEntity(medicineRequest);
         medicineRepository.save(medicine);
         return medicineMapper.toResource(medicine);
     }
 
+    @Transactional
     public MedicineResource updateMedicine(Long id, MedicineRequest medicineRequest) {
         Medicine medicine = findMedicineById(id);
         medicine = medicineMapper.updateEntity(medicine, medicineRequest);

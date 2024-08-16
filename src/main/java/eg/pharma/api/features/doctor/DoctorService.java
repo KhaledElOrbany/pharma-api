@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class DoctorService {
         return doctorMapper.toResourceList(doctors.getContent());
     }
 
+    @Transactional
     public DoctorResource createDoctor(DoctorRequest doctorRequest) {
         Doctor doctor = doctorMapper.toEntity(doctorRequest);
         doctorValidator.validate(doctor);
@@ -56,6 +58,7 @@ public class DoctorService {
         return doctorMapper.toResource(doctor);
     }
 
+    @Transactional
     public DoctorResource updateDoctor(Long id, DoctorRequest doctorRequest) {
         Doctor doctor = findDoctorById(id);
         doctorValidator.validate(doctor);

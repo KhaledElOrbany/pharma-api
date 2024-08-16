@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserService extends BaseService {
         this.userValidator = userValidator;
     }
 
+    @Transactional
     public UserResource create(UserRequest userRequest) {
         User user = userMapper.toEntity(userRequest);
         userValidator.validate(user);
@@ -81,6 +83,7 @@ public class UserService extends BaseService {
         return userMapper.toResourceList(users.getContent());
     }
 
+    @Transactional
     public UserResource updateUser(Long id, UserRequest userRequest) {
         User user = findUserById(id);
         user = userMapper.updateEntity(user, userRequest);

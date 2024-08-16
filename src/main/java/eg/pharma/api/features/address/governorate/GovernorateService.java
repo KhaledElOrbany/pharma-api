@@ -6,6 +6,7 @@ import eg.pharma.api.features.address.governorate.dto.GovernorateRequest;
 import eg.pharma.api.features.address.governorate.dto.GovernorateResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,12 +36,14 @@ public class GovernorateService {
         return governorateMapper.toResourceList(governorates);
     }
 
+    @Transactional
     public GovernorateResource createGovernorate(GovernorateRequest governorateRequest) {
         Governorate governorate = governorateMapper.toEntity(governorateRequest);
         governorate = governorateRepository.save(governorate);
         return governorateMapper.toResource(governorate);
     }
 
+    @Transactional
     public GovernorateResource updateGovernorate(Long id, GovernorateRequest governorateRequest) {
         Governorate governorate = governorateRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Governorate not found", HttpStatus.NOT_FOUND));

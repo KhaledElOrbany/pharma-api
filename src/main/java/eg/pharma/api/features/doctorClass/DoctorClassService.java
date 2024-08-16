@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,12 +43,14 @@ public class DoctorClassService {
         return doctorClassMapper.toResourceList(doctorClasses.getContent());
     }
 
+    @Transactional
     public DoctorClassResource createDoctorClass(DoctorClassRequest doctorRequest) {
         DoctorClass doctorClass = doctorClassMapper.toEntity(doctorRequest);
         doctorClassRepository.save(doctorClass);
         return doctorClassMapper.toResource(doctorClass);
     }
 
+    @Transactional
     public DoctorClassResource updateDoctorClass(Long id, DoctorClassRequest doctorRequest) {
         DoctorClass doctorClass = findDoctorClassById(id);
         doctorClass = doctorClassMapper.updateEntity(doctorClass, doctorRequest);

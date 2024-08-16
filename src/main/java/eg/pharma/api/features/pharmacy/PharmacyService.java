@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,12 +36,14 @@ public class PharmacyService {
         return pharmacyMapper.toResourceList(pharmacies.getContent());
     }
 
+    @Transactional
     public PharmacyResource createPharmacy(PharmacyRequest pharmacyRequest) {
         Pharmacy pharmacy = pharmacyMapper.toEntity(pharmacyRequest);
         pharmacy = pharmacyRepository.save(pharmacy);
         return pharmacyMapper.toResource(pharmacy);
     }
 
+    @Transactional
     public PharmacyResource updatePharmacy(Long id, PharmacyRequest pharmacyRequest) {
         Pharmacy pharmacy = pharmacyRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Pharmacy not found", HttpStatus.NOT_FOUND));
