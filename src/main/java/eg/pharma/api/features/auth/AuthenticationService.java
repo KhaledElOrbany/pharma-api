@@ -8,6 +8,7 @@ import eg.pharma.api.features.auth.dto.AuthenticationResponse;
 import eg.pharma.api.helpers.services.JwtService;
 import eg.pharma.api.helpers.utils.EnvironmentUtil;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +42,8 @@ public class AuthenticationService {
             throw new BusinessException(ex.getMessage());
         }
 
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new BusinessException("User not found", HttpStatus.NOT_FOUND));
         String token = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 

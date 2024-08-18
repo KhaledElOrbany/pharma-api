@@ -1,5 +1,6 @@
 package eg.pharma.api.helpers.services;
 
+import eg.pharma.api.exception.BusinessException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,6 +14,7 @@ import java.util.function.Function;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -107,7 +109,8 @@ public class JwtService {
 
     public String retrieveRefreshToken(HttpServletRequest request) {
         Optional<Cookie> refreshTokenCookie = getRefreshTokenCookie(request);
-        return refreshTokenCookie.map(Cookie::getValue).orElse(null);
+        return refreshTokenCookie.map(Cookie::getValue)
+                .orElseThrow(() -> new BusinessException("Authentication was not valid! Please login again.", HttpStatus.UNAUTHORIZED));
     }
 
     private Optional<Cookie> getRefreshTokenCookie(HttpServletRequest request) {
