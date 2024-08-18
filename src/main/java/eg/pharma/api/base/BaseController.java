@@ -66,6 +66,9 @@ public class BaseController {
         try {
             this.page = Integer.parseInt(params.get("page")[0]);
             this.size = Integer.parseInt(params.get("size")[0]);
+
+            params.put("page", new String[]{String.valueOf(page)});
+            params.put("size", new String[]{String.valueOf(size)});
         } catch (Exception e) {
             this.page = 0;
             this.size = 5;
