@@ -12,12 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -77,9 +79,12 @@ public class UserService extends BaseService {
         return userMapper.toResource(user);
     }
 
-    public List<UserResource> getAllUsers(int page, int size) {
+    public List<UserResource> getAllUsers(@NonNull Map<String, String[]> params) {
+        int page = Integer.parseInt(params.get("page")[0]);
+        int size = Integer.parseInt(params.get("size")[0]);
+        boolean isDeleted = Boolean.parseBoolean(params.get("isDeleted")[0]);
         Pageable pageable = PageRequest.of(page, size);
-        Page<User> users = userRepository.findAll(pageable);
+        Page<User> users = userRepository.findAllByIsDeleted(isDeleted, pageable);
         return userMapper.toResourceList(users.getContent());
     }
 

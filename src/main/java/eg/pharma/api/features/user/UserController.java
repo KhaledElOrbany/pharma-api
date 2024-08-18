@@ -31,7 +31,7 @@ public class UserController extends BaseController {
 
     @GetMapping(path = "/list")
     public ApiResponse getAllUsers() {
-        List<?> data = userService.getAllUsers(page, size);
+        List<?> data = userService.getAllUsers(params);
         return respond(data, new HashMap<>() {{
             put("tableMetaData", getTablesMetaData("usersList"));
             put("total", data.size());
